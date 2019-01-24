@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/GA/Scenes de test/Scene test GA.unity
+- path: Assets/GD/Alex/Player Controller/TEST_Player controller gyro.unity
   isLoaded: 1
   isActive: 1
