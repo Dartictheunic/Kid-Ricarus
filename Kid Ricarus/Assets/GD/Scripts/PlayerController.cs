@@ -76,11 +76,12 @@ public class PlayerController : MonoBehaviour
     public void Rotate()
     {
         truePhoneDelta = Input.acceleration - basePhoneAngle;
-        xAccelerationDelta = truePhoneDelta.x;
+        xAccelerationDelta = -truePhoneDelta.x;
         zAccelerationDelta = (truePhoneDelta.y - truePhoneDelta.z) / 2;
-        float newXRotation = Mathf.InverseLerp(-maxInputTaken, maxInputTaken, xAccelerationDelta);
-        float newZRotation = Mathf.InverseLerp(-maxInputTaken, maxInputTaken, zAccelerationDelta);
+        float newXRotation = Mathf.InverseLerp(-maxInputTaken, maxInputTaken, zAccelerationDelta);
+        float newZRotation = Mathf.InverseLerp(-maxInputTaken, maxInputTaken, xAccelerationDelta);
         Vector3 mabite = new Vector3(Mathf.Lerp(-maxXRotation, maxXRotation, newXRotation), 0, Mathf.Lerp(-maxZRotation, maxZRotation, newZRotation));
+        gyroRotationRate.text = "Vector 3 taken : " + mabite;
         transform.eulerAngles = mabite;
     }
 
@@ -92,16 +93,22 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-#endregion
+    #endregion
 
+    private void Update()
+    {
+        if (Input.touchCount > 0)
+        {
+            ResetAcceleration();
+        }
+    }
 
-#region Debug
+    #region Debug
 
     public void UpdateTextsDebug()
     {
         Acceleration.text = "Acceleration : " + Input.acceleration.ToString();
         gyroAttitude.text = "Gyro.attitude : " + Input.gyro.attitude.ToString();
-        //gyroRotationRate.text = "Gyro.rotationRate : " + Input.gyro.rotationRate.ToString();
         //gyroRotationRateUnbiaised.text = "Gyro.rotationRateUnbiaised : " + Input.gyro.rotationRateUnbiased.ToString();
         gyroUserAcceleration.text = "Gyro.userAcceleration : " + Input.gyro.userAcceleration.ToString();
     }
