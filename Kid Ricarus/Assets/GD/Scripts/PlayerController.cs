@@ -76,12 +76,13 @@ public class PlayerController : MonoBehaviour
         StartCoroutine(CheckSmartphoneAngle());
     }
 
-    public void ResetAcceleration()
+    public void ResetPlayer()
     {
         basePhoneAngle = Input.acceleration;
         transform.rotation = Quaternion.identity;
         targetRotation = Vector3.zero;
         transform.position = Vector3.zero;
+        cam.ResetCameraPosition();
     }
 
     private void FixedUpdate()
@@ -148,7 +149,7 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.touchCount > 0)
         {
-            ResetAcceleration();
+            ResetPlayer();
         }
 
         myEulerAngles = transform.eulerAngles;
