@@ -1,4 +1,0 @@
-sceneSetups:
-- path: Assets/GD/Alex/Player Controller/TEST_Player controller gyro.unity
-  isLoaded: 1
-  isActive: 1
