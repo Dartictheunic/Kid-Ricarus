@@ -23,9 +23,6 @@ public class CameraControllerTest2 : MonoBehaviour
     public Transform X;
     public Transform Y;
 
-    public float debugValueX;
-    public float debugValueY;
-
     float baseDistance;
 
     public Text cameraText;
@@ -43,35 +40,20 @@ public class CameraControllerTest2 : MonoBehaviour
     private void Update()
     {
         transform.LookAt(target);
-
-        if (Input.GetMouseButton(0))
-        {
-            UpdateCamera(-debugValueX, -debugValueY);
-        }
-
-        else if (Input.GetMouseButton(0))
-        {
-            UpdateCamera(debugValueX, debugValueY);
-        }
-
-        else
-        {
-            UpdateCamera(0, 0);
-        }
     }
 
-    public void UpdateCamera(float xVelocity, float yVelocity)
+    public void UpdateCamera(float yVelocity, float xVelocity)
     {
         if (updateCamera)
         {
             Vector3 objective = Vector3.zero;
 
-            if (Mathf.Abs(xVelocity) > 5 && Vector3.Distance(X.position, transform.position) > accelerationCap) //La cam doit aller très vite
+            if (Mathf.Abs(xVelocity) > 5) // && Vector3.Distance(X.position, transform.position) > accelerationCap) //La cam doit aller très vite
             {
                 objective.x = Mathf.Lerp(O.position.x * Mathf.Sign(xVelocity * -1), X.position.x * Mathf.Sign(xVelocity * -1), xVelocity * Time.deltaTime * bigCamSpeed * cameraElasticityBig.Evaluate(Mathf.Abs(xVelocity)));
             }
 
-            else if (Mathf.Abs(xVelocity) > 5 && Vector3.Distance(X.position, transform.position) <= accelerationCap) //La cam doit aller doucement
+            else if (Mathf.Abs(xVelocity) > 5) // && Vector3.Distance(X.position, transform.position) <= accelerationCap) //La cam doit aller doucement
             {
                 objective.x = Mathf.Lerp(O.position.x * Mathf.Sign(xVelocity * -1), X.position.x * Mathf.Sign(xVelocity * -1), xVelocity * Time.deltaTime * smallCamSpeed * cameraElasticityBig.Evaluate(Mathf.Abs(xVelocity)));
             }
@@ -81,12 +63,12 @@ public class CameraControllerTest2 : MonoBehaviour
                 objective.x = Mathf.Lerp(transform.position.x, O.position.x * Mathf.Sign(xVelocity * -1), xVelocity * Time.deltaTime * smallCamSpeed * cameraElasticitySmall.Evaluate(Mathf.Abs(xVelocity)));
             }
 
-            if (Mathf.Abs(yVelocity) > 5 && Vector3.Distance(Y.position, transform.position) > accelerationCap)
+            if (Mathf.Abs(yVelocity) > 5) // && Vector3.Distance(Y.position, transform.position) > accelerationCap)
             {
                 objective.y = Mathf.Lerp(target.position.y * Mathf.Sign(yVelocity * -1), Y.position.y * Mathf.Sign(yVelocity * -1), yVelocity * Time.deltaTime * bigCamSpeed * cameraElasticityBig.Evaluate(Mathf.Abs(yVelocity)));
             }
 
-            else if (Mathf.Abs(xVelocity) > 5 && Vector3.Distance(Y.position, transform.position) <= accelerationCap) 
+            else if (Mathf.Abs(xVelocity) > 5) // && Vector3.Distance(Y.position, transform.position) <= accelerationCap) 
             {
                 objective.y = Mathf.Lerp(target.position.y * Mathf.Sign(yVelocity * -1), Y.position.y * Mathf.Sign(yVelocity * -1), yVelocity * Time.deltaTime * smallCamSpeed * cameraElasticityBig.Evaluate(Mathf.Abs(yVelocity)));
             }
@@ -96,7 +78,9 @@ public class CameraControllerTest2 : MonoBehaviour
                 objective.y = Mathf.Lerp(transform.position.y, target.position.x * Mathf.Sign(yVelocity * -1), yVelocity * Time.deltaTime * smallCamSpeed * cameraElasticitySmall.Evaluate(Mathf.Abs(yVelocity)));
             }
 
-            objective.z = baseDistance *-1;
+            cameraText.text = objective.ToString();
+
+            objective.z =  target.position.z - baseDistance;
 
             transform.position = objective;
         }
@@ -121,6 +105,6 @@ public class CameraControllerTest2 : MonoBehaviour
     void Awake()
     {
         baseOffset = target.position - transform.position;
-        baseDistance = Vector3.Distance(target.position, transform.position);
+        baseDistance = target.position.z - transform.position.z;
     }
 }
