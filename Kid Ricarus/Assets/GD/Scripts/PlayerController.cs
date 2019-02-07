@@ -28,7 +28,7 @@ public class PlayerController : MonoBehaviour
     [Space(30)]
     [Tooltip("Le truc qui sert à fake la rotation, plus représentatif du gyro du téléphone")]
     public Turner turner;
-    public CameraController cam;
+    public CameraControllerTest2 cam;
     #endregion
 
     #region variables Prog
@@ -124,7 +124,7 @@ public class PlayerController : MonoBehaviour
         targetRotation = phoneRotations;
         transform.eulerAngles = Vector3.Lerp(myEulerAngles, targetRotation, rotationSpeed);
         RotateTurner();
-        cam.UpdateCamera(myEulerAngles.x, myEulerAngles.y);
+        cam.UpdateCamera(targetRotation.x, targetRotation.z);
         gyroAttitude.text = "MY eulerAngles :  " + myEulerAngles;
         gyroRotationRateUnbiaised.text = "Character eulerAngles : " + transform.eulerAngles;
     }
