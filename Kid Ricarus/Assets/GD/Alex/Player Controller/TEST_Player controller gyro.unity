@@ -1397,7 +1397,7 @@ MonoBehaviour:
   maxYRotation: 30
   maxInputTaken: 0.25
   turner: {fileID: 374789324}
-  cam: {fileID: 1703433904}
+  cam: {fileID: 0}
   actualPlayerState: 1
   mustMoveForward: 1
   Acceleration: {fileID: 949627888}
@@ -4360,16 +4360,15 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  bigCamSpeed: 5
-  smallCamSpeed: 2
-  verticalCamSpeed: 3
-  accelerationCap: 8
+  bigCamSpeed: 8
+  smallCamSpeed: 4
+  verticalCamSpeed: 5
+  accelerationCap: 5
   target: {fileID: 1798929918}
   O: {fileID: 58474974}
   X: {fileID: 1702985006}
   Y: {fileID: 630442216}
-  debugValueX: 1
-  debugValueY: 1
+  cameraText: {fileID: 949627888}
 --- !u!81 &1880791237
 AudioListener:
   m_ObjectHideFlags: 0
