@@ -5,11 +5,6 @@
 [Bb]uilds/
 [Ll]ogs/
 
-/*
-/*/
-
-Kid Ricarus/Library/
-
 !.gitignore
 !/Assets/
 !/ProjectSettings/
@@ -38,6 +33,7 @@ ExportedObj/
 *.mdb
 *.opendb
 *.VC.db
+*.vs
 
 # Unity3D generated meta files
 *.pidb.meta
