@@ -48,29 +48,29 @@ public class CameraControllerTest2 : MonoBehaviour
         {
             Vector3 objective = Vector3.zero;
 
-            if (Mathf.Abs(xVelocity) > 5) // && Vector3.Distance(X.position, transform.position) > accelerationCap) //La cam doit aller très vite
+            if (Mathf.Abs(xVelocity) > 5 && Vector3.Distance(X.position, transform.position) > accelerationCap) //La cam doit aller très vite
             {
-                objective.x = Mathf.Lerp(O.position.x * Mathf.Sign(xVelocity * -1), X.position.x * Mathf.Sign(xVelocity * -1), xVelocity * Time.deltaTime * bigCamSpeed * cameraElasticityBig.Evaluate(Mathf.Abs(xVelocity)));
+                objective.x = Mathf.Lerp(O.position.x * Mathf.Sign(xVelocity * -1), X.position.x * Mathf.Sign(xVelocity * -1), Time.deltaTime * bigCamSpeed * cameraElasticityBig.Evaluate(Mathf.Abs(xVelocity)));
             }
 
-            else if (Mathf.Abs(xVelocity) > 5) // && Vector3.Distance(X.position, transform.position) <= accelerationCap) //La cam doit aller doucement
+            else if (Mathf.Abs(xVelocity) > 5 && Vector3.Distance(X.position, transform.position) <= accelerationCap) //La cam doit aller doucement
             {
-                objective.x = Mathf.Lerp(O.position.x * Mathf.Sign(xVelocity * -1), X.position.x * Mathf.Sign(xVelocity * -1), xVelocity * Time.deltaTime * smallCamSpeed * cameraElasticityBig.Evaluate(Mathf.Abs(xVelocity)));
+                objective.x = Mathf.Lerp(O.position.x * Mathf.Sign(xVelocity * -1), X.position.x * Mathf.Sign(xVelocity * -1), Time.deltaTime * smallCamSpeed * cameraElasticityBig.Evaluate(Mathf.Abs(xVelocity)));
             }
 
             else //La cam doit rester près du player
             {
-                objective.x = Mathf.Lerp(transform.position.x, O.position.x * Mathf.Sign(xVelocity * -1), xVelocity * Time.deltaTime * smallCamSpeed * cameraElasticitySmall.Evaluate(Mathf.Abs(xVelocity)));
+                objective.x = Mathf.Lerp(transform.position.x, O.position.x * Mathf.Sign(xVelocity * -1), Time.deltaTime * smallCamSpeed * cameraElasticitySmall.Evaluate(Mathf.Abs(xVelocity)));
             }
 
-            if (Mathf.Abs(yVelocity) > 5) // && Vector3.Distance(Y.position, transform.position) > accelerationCap)
+            if (Mathf.Abs(yVelocity) > 5 && Vector3.Distance(Y.position, transform.position) > accelerationCap)
             {
-                objective.y = Mathf.Lerp(target.position.y * Mathf.Sign(yVelocity * -1), Y.position.y * Mathf.Sign(yVelocity * -1), yVelocity * Time.deltaTime * bigCamSpeed * cameraElasticityBig.Evaluate(Mathf.Abs(yVelocity)));
+                objective.y = Mathf.Lerp(target.position.y * Mathf.Sign(yVelocity * -1), Y.position.y * Mathf.Sign(yVelocity * -1), Time.deltaTime * bigCamSpeed * cameraElasticityBig.Evaluate(Mathf.Abs(yVelocity)));
             }
 
-            else if (Mathf.Abs(xVelocity) > 5) // && Vector3.Distance(Y.position, transform.position) <= accelerationCap) 
+            else if (Mathf.Abs(xVelocity) > 5 && Vector3.Distance(Y.position, transform.position) <= accelerationCap) 
             {
-                objective.y = Mathf.Lerp(target.position.y * Mathf.Sign(yVelocity * -1), Y.position.y * Mathf.Sign(yVelocity * -1), yVelocity * Time.deltaTime * smallCamSpeed * cameraElasticityBig.Evaluate(Mathf.Abs(yVelocity)));
+                objective.y = Mathf.Lerp(target.position.y * Mathf.Sign(yVelocity * -1), Y.position.y * Mathf.Sign(yVelocity * -1), Time.deltaTime * smallCamSpeed * cameraElasticityBig.Evaluate(Mathf.Abs(yVelocity)));
             }
 
             else
@@ -78,11 +78,11 @@ public class CameraControllerTest2 : MonoBehaviour
                 objective.y = Mathf.Lerp(transform.position.y, target.position.x * Mathf.Sign(yVelocity * -1), yVelocity * Time.deltaTime * smallCamSpeed * cameraElasticitySmall.Evaluate(Mathf.Abs(yVelocity)));
             }
 
-            cameraText.text = objective.ToString();
-
-            objective.z =  target.position.z - baseDistance;
+            float actualDistance = Vector3.Distance(objective, target.position);
+            objective.z =  actualDistance - baseDistance;
 
             transform.position = objective;
+            cameraText.text = objective.ToString();
         }
     }
 

@@ -66,7 +66,7 @@ public class PlayerController : MonoBehaviour
     public void SetRotationSpeed(float newSpeed)
     {
         rotationSpeed = newSpeed;
-        rotationSpeedText.text = rotationSpeed.ToString();
+        //rotationSpeedText.text = rotationSpeed.ToString();
     }
 
     private void Start()
@@ -119,14 +119,14 @@ public class PlayerController : MonoBehaviour
     public void Rotate()
     {
         Vector3 phoneRotations = GetPhoneRotations();
-        gyroRotationRate.text = "Vector 3 taken : " + phoneRotations;
+        //gyroRotationRate.text = "Vector 3 taken : " + phoneRotations;
 
         targetRotation = phoneRotations;
         transform.eulerAngles = Vector3.Lerp(myEulerAngles, targetRotation, rotationSpeed);
         RotateTurner();
-        cam.UpdateCamera(targetRotation.x, targetRotation.z);
-        gyroAttitude.text = "MY eulerAngles :  " + myEulerAngles;
-        gyroRotationRateUnbiaised.text = "Character eulerAngles : " + transform.eulerAngles;
+        cam.UpdateCamera(targetRotation.x, targetRotation.y);
+        gyroAttitude.text = "Update cam :  " + targetRotation.x + " x & " + targetRotation.y;
+        //gyroRotationRateUnbiaised.text = "Character eulerAngles : " + transform.eulerAngles;
     }
 
     public void RotateTurner()
@@ -171,8 +171,8 @@ public class PlayerController : MonoBehaviour
 
     public void UpdateTextsDebug()
     {
-        gyroUserAcceleration.text = "Turner rotation " + turner.transform.eulerAngles;
-        Acceleration.text = "Acceleration : " + Input.acceleration.ToString();
+        //gyroUserAcceleration.text = "Turner rotation " + turner.transform.eulerAngles;
+        //Acceleration.text = "Acceleration : " + Input.acceleration.ToString();
     }
 
 #endregion
