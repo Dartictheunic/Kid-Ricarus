@@ -21,6 +21,7 @@ Kid Ricarus/.vs/
 ExportedObj/
 .consulo/
 *.csproj
+*.dll
 *.unityproj
 *.sln
 *.suo
