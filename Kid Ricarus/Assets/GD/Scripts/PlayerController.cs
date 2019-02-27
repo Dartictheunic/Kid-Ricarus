@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEditor;
 
 public class PlayerController : MonoBehaviour
 {
@@ -20,6 +21,9 @@ public class PlayerController : MonoBehaviour
     [Tooltip("Angle que l'on peut donner au téléphone au maximum")]
     public float maxInputTaken;
 
+
+    [Header("Variables pour l'éditeur")]
+    public float mouseScale;
     #endregion
 
 
@@ -28,7 +32,7 @@ public class PlayerController : MonoBehaviour
     [Space(30)]
     [Tooltip("Le truc qui sert à fake la rotation, plus représentatif du gyro du téléphone")]
     public Turner turner;
-    public CameraControllerTest2 cam;
+    public CameraControllerTest1 cam;
     #endregion
 
     #region variables Prog
@@ -55,6 +59,9 @@ public class PlayerController : MonoBehaviour
     float xAccelerationDelta;
     float zAccelerationDelta;
     Rigidbody playerBody;
+
+
+    Vector3 lastMousePosition;
     #endregion
 
     public IEnumerator CheckSmartphoneAngle()
@@ -94,9 +101,41 @@ public class PlayerController : MonoBehaviour
         UpdateTextsDebug();
 #endif
 
+#if UNITY_EDITOR
+        EditorControls();
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            ResetPlayer();
+        }
+
+        if (Input.GetKey(KeyCode.E))
+        {
+            forwardSpeed += Time.deltaTime;
+        }
+
+        if (Input.GetKey(KeyCode.A))
+        {
+            forwardSpeed -= Time.deltaTime;
+        }
+#endif
     }
 
-#region Gestion Deplacement
+    public void EditorControls()
+    {
+        Vector3 mouseRotation = Camera.main.ScreenToViewportPoint(Input.mousePosition);
+        mouseRotation -= new Vector3(.5f, .5f);
+        mouseRotation *= mouseScale;
+        Debug.Log(mouseRotation);
+        targetRotation = new Vector3(-mouseRotation.y, mouseRotation.x);
+        transform.eulerAngles = Vector3.Lerp(myEulerAngles, targetRotation, rotationSpeed);
+        RotateTurner();
+        cam.UpdateCamera(targetRotation.x, targetRotation.y);
+
+        lastMousePosition = Input.mousePosition;
+    }
+
+    #region Gestion Deplacement
 
     public Vector3 GetPhoneRotations()
     {
