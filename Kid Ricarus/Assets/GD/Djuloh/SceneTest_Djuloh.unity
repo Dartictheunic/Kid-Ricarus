@@ -138,7 +138,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 58474973}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1, y: 0, z: 0}
+  m_LocalPosition: {x: -1.36, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 186764149}
@@ -980,7 +980,7 @@ Transform:
   m_Children:
   - {fileID: 1710161864}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &374789324
 MonoBehaviour:
@@ -1097,7 +1097,7 @@ GameObject:
   - component: {fileID: 418282260}
   - component: {fileID: 418282259}
   m_Layer: 5
-  m_Name: Text (4)
+  m_Name: Gyro user Acceleration
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1355,7 +1355,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 544973075}
-  - component: {fileID: 544973074}
+  - component: {fileID: 544973078}
   - component: {fileID: 544973073}
   - component: {fileID: 544973072}
   - component: {fileID: 544973071}
@@ -1425,34 +1425,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 544973070}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &544973074
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 544973070}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f1cba3c341a4ca47a56f1c6fe40f52f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  forwardSpeed: 2.97
-  maxForwardSpeed: 0
-  rotationSpeed: 0.1
-  maxXRotation: 30
-  maxYRotation: 30
-  maxInputTaken: 0.25
-  turner: {fileID: 374789324}
-  cam: {fileID: 1880791236}
-  actualPlayerState: 1
-  mustMoveForward: 1
-  Acceleration: {fileID: 949627888}
-  gyroAttitude: {fileID: 990664140}
-  gyroRotationRate: {fileID: 1612070632}
-  gyroRotationRateUnbiaised: {fileID: 1425679949}
-  gyroUserAcceleration: {fileID: 418282259}
-  rotationSpeedText: {fileID: 1407167534}
 --- !u!4 &544973075
 Transform:
   m_ObjectHideFlags: 0
@@ -1468,7 +1440,7 @@ Transform:
   - {fileID: 1798929918}
   - {fileID: 186764149}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &544973076
 Rigidbody:
@@ -1486,6 +1458,36 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &544973078
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 544973070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d67286d5e8f829459c2403c2f2b58a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maincam: {fileID: 1880791238}
+  forwardSpeed: 2.97
+  maxForwardSpeed: 1000
+  rotationSpeed: 0.1
+  maxXRotation: 90
+  maxYRotation: 90
+  maxInputTaken: 0.25
+  mouseScale: 25
+  turner: {fileID: 374789324}
+  cam: {fileID: 1703433904}
+  actualPlayerState: 1
+  mustMoveForward: 1
+  Acceleration: {fileID: 949627888}
+  gyroAttitude: {fileID: 990664140}
+  gyroRotationRate: {fileID: 1612070632}
+  gyroRotationRateUnbiaised: {fileID: 1425679949}
+  gyroUserAcceleration: {fileID: 418282259}
+  rotationSpeedText: {fileID: 1407167534}
 --- !u!1 &556650184
 GameObject:
   m_ObjectHideFlags: 0
@@ -1677,7 +1679,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 630442215}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.5, z: 0}
+  m_LocalPosition: {x: 0, y: 2.62, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 186764149}
@@ -2123,7 +2125,7 @@ GameObject:
   - component: {fileID: 949627889}
   - component: {fileID: 949627888}
   m_Layer: 5
-  m_Name: Text
+  m_Name: Acceleration
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2254,7 +2256,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &990664138
 GameObject:
@@ -2268,7 +2270,7 @@ GameObject:
   - component: {fileID: 990664141}
   - component: {fileID: 990664140}
   m_Layer: 5
-  m_Name: Text (1)
+  m_Name: Gyro Att
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2615,7 +2617,7 @@ RectTransform:
   - {fileID: 418282258}
   - {fileID: 2146473627}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -3053,7 +3055,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: -6.2780004, y: -18.865002, z: -334.001}
 --- !u!1 &1373175765
 GameObject:
@@ -3328,7 +3330,7 @@ GameObject:
   - component: {fileID: 1425679950}
   - component: {fileID: 1425679949}
   m_Layer: 5
-  m_Name: Text (3)
+  m_Name: Gyro Rot Rate Unbiaised
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3589,7 +3591,7 @@ GameObject:
   - component: {fileID: 1612070633}
   - component: {fileID: 1612070632}
   m_Layer: 5
-  m_Name: Text (2)
+  m_Name: Gyro Rot Rate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3864,7 +3866,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1702985005}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3, y: 0, z: 0}
+  m_LocalPosition: {x: -4.89, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 186764149}
@@ -3996,7 +3998,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1703433904
 MonoBehaviour:
@@ -4435,7 +4437,7 @@ GameObject:
   - component: {fileID: 1880791237}
   - component: {fileID: 1880791236}
   m_Layer: 0
-  m_Name: Test camera 2
+  m_Name: Main Camera 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4450,7 +4452,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1880791235}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 459b3e27f3447d541b4def98d478fa07, type: 3}
+  m_Script: {fileID: 11500000, guid: f54b62a340ece6c4a90782418a36eae1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   cameraElasticityBig:
@@ -4501,11 +4503,14 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  bigCamSpeed: 8
-  smallCamSpeed: 4
-  verticalCamSpeed: 5
-  accelerationCap: 5
+  bigCamSpeed: 16
+  smallCamSpeed: 8
+  verticalCamSpeed: 10
+  accelerationCap: 10
   target: {fileID: 1798929918}
+  dampVelocityX: 0
+  dampVelocityY: 0
+  dampSmoothTime: 0
   O: {fileID: 58474974}
   X: {fileID: 1702985006}
   Y: {fileID: 630442216}
@@ -4567,12 +4572,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1880791235}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 1, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1965775738
 GameObject:
@@ -4757,7 +4762,7 @@ Transform:
   - {fileID: 1157471517}
   - {fileID: 699975169}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2146473626
 GameObject:
@@ -4846,7 +4851,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 544973074}
+      - m_Target: {fileID: 0}
         m_MethodName: SetRotationSpeed
         m_Mode: 0
         m_Arguments:

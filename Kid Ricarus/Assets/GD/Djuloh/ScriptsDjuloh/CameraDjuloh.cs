@@ -16,6 +16,14 @@ public class CameraDjuloh : MonoBehaviour
     public float accelerationCap;
     public Transform target;
 
+    [Header("DampTests")]
+    public float dampVelocityX;
+    public float dampVelocityY;
+    public float dampSmoothTime;
+
+
+
+
     [Header("Refs")]
     Vector3 baseOffset;
     Quaternion baseRotation;
@@ -56,14 +64,20 @@ public class CameraDjuloh : MonoBehaviour
         {
             Vector3 objective = Vector3.zero;
 
-            if (Mathf.Abs(xVelocity) > 5 && Vector3.Distance(X.position, transform.position) > accelerationCap) //La cam doit aller très vite
+            if (Mathf.Abs(xVelocity) > 5 && Vector3.Distance(X.position, transform.position) > accelerationCap) 
             {
-                objective.x = Mathf.Lerp(O.position.x * Mathf.Sign(xVelocity * -1), X.position.x * Mathf.Sign(xVelocity * -1), Time.deltaTime * bigCamSpeed * cameraElasticityBig.Evaluate(Mathf.Abs(xVelocity)));
+
+                // objective.x = Mathf.Lerp(O.position.x * Mathf.Sign(xVelocity * -1), X.position.x * Mathf.Sign(xVelocity * -1), Time.deltaTime * bigCamSpeed * cameraElasticityBig.Evaluate(Mathf.Abs(xVelocity)));
+
+                objective.x = Mathf.SmoothDamp(O.position.x, X.position.x, ref dampVelocityX, dampSmoothTime);
             }
 
-            else if (Mathf.Abs(xVelocity) > 5 && Vector3.Distance(X.position, transform.position) <= accelerationCap) //La cam doit aller doucement
+            else if (Mathf.Abs(xVelocity) > 5 && Vector3.Distance(X.position, transform.position) <= accelerationCap) 
             {
-                objective.x = Mathf.Lerp(O.position.x * Mathf.Sign(xVelocity * -1), X.position.x * Mathf.Sign(xVelocity * -1), Time.deltaTime * smallCamSpeed * cameraElasticityBig.Evaluate(Mathf.Abs(xVelocity)));
+                // objective.x = Mathf.Lerp(O.position.x * Mathf.Sign(xVelocity * -1), X.position.x * Mathf.Sign(xVelocity * -1), Time.deltaTime * smallCamSpeed * cameraElasticityBig.Evaluate(Mathf.Abs(xVelocity)));
+
+                objective.x = Mathf.SmoothDamp(O.position.x, X.position.x, ref dampVelocityX, dampSmoothTime);
+
             }
 
             else //La cam doit rester près du player
