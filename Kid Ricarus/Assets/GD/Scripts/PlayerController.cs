@@ -31,8 +31,7 @@ public class PlayerController : MonoBehaviour
     [Header("Liens à faire")]
     [Space(30)]
     [Tooltip("Le truc qui sert à fake la rotation, plus représentatif du gyro du téléphone")]
-    public Turner turner;
-    public CameraControllerTest1 cam;
+    public CameraController cam;
     #endregion
 
     #region variables Prog
@@ -60,8 +59,6 @@ public class PlayerController : MonoBehaviour
     float zAccelerationDelta;
     Rigidbody playerBody;
 
-
-    Vector3 lastMousePosition;
     #endregion
 
     public IEnumerator CheckSmartphoneAngle()
@@ -95,10 +92,9 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         Move();
-        Rotate();
 
 #if !UNITY_EDITOR
-        UpdateTextsDebug();
+        Rotate();
 #endif
 
 #if UNITY_EDITOR
@@ -121,19 +117,7 @@ public class PlayerController : MonoBehaviour
 #endif
     }
 
-    public void EditorControls()
-    {
-        Vector3 mouseRotation = Camera.main.ScreenToViewportPoint(Input.mousePosition);
-        mouseRotation -= new Vector3(.5f, .5f);
-        mouseRotation *= mouseScale;
-        Debug.Log(mouseRotation);
-        targetRotation = new Vector3(-mouseRotation.y, mouseRotation.x);
-        transform.eulerAngles = Vector3.Lerp(myEulerAngles, targetRotation, rotationSpeed);
-        RotateTurner();
-        cam.UpdateCamera(targetRotation.x, targetRotation.y);
 
-        lastMousePosition = Input.mousePosition;
-    }
 
     #region Gestion Deplacement
 
@@ -149,6 +133,7 @@ public class PlayerController : MonoBehaviour
         newXRotation = Mathf.InverseLerp(-maxInputTaken, maxInputTaken, zAccelerationDelta);
 
         newYRotation = Mathf.InverseLerp(-maxInputTaken, maxInputTaken, xAccelerationDelta);
+        gyroAttitude.text = "newYRotation :  " + newYRotation;
 
         Vector3 calculatedVector = new Vector3(Mathf.Lerp(-maxXRotation, maxXRotation, newXRotation), Mathf.Lerp(-maxYRotation, maxYRotation, newYRotation), 0);
         calculatedVector.y *= -1;
@@ -158,20 +143,16 @@ public class PlayerController : MonoBehaviour
     public void Rotate()
     {
         Vector3 phoneRotations = GetPhoneRotations();
-        //gyroRotationRate.text = "Vector 3 taken : " + phoneRotations;
-
         targetRotation = phoneRotations;
-        transform.eulerAngles = Vector3.Lerp(myEulerAngles, targetRotation, rotationSpeed);
-        RotateTurner();
-        cam.UpdateCamera(targetRotation.x, targetRotation.y);
-        gyroAttitude.text = "Update cam :  " + targetRotation.x + " x & " + targetRotation.y;
-        //gyroRotationRateUnbiaised.text = "Character eulerAngles : " + transform.eulerAngles;
-    }
 
-    public void RotateTurner()
-    {
-        Vector3 turnerRotation = new Vector3(targetRotation.x, -targetRotation.z*4, 0);
-        turner.UpdateTurnerRotation(turnerRotation);
+
+#pragma warning disable CS0618 // Type or member is obsolete
+        transform.RotateAround(Vector3.up, targetRotation.y * Time.deltaTime * rotationSpeed);
+#pragma warning restore CS0618 // Type or member is obsolete
+
+
+        transform.eulerAngles = new Vector3(Mathf.Lerp(myEulerAngles.x, targetRotation.x, rotationSpeed), transform.eulerAngles.y, transform.eulerAngles.z);
+        cam.UpdateCamera(Mathf.InverseLerp(0, maxYRotation, Mathf.Abs(targetRotation.y)) * Mathf.Sign(targetRotation.y), Mathf.InverseLerp(0, maxXRotation, Mathf.Abs(targetRotation.x)) * Mathf.Sign(targetRotation.x));
     }
 
     public void Move()
@@ -191,30 +172,46 @@ public class PlayerController : MonoBehaviour
             ResetPlayer();
         }
 
-        myEulerAngles = transform.eulerAngles;
-        if (myEulerAngles.x > 180)
+        myEulerAngles = returnGoodEulers(transform.eulerAngles);
+    }
+
+    public Vector3 returnGoodEulers(Vector3 vectorToReturn)
+    {
+        if (vectorToReturn.x > 180)
         {
-            myEulerAngles.x -= 360;
+            vectorToReturn.x -= 360;
         }
-        if (myEulerAngles.y > 180)
+        if (vectorToReturn.y > 180)
         {
-            myEulerAngles.y -= 360;
+            vectorToReturn.y -= 360;
         }
-        if (myEulerAngles.z > 180)
+        if (vectorToReturn.z > 180)
         {
-            myEulerAngles.z -= 360;
+            vectorToReturn.z -= 360;
         }
+
+        return vectorToReturn;
     }
 
     #region Debug
 
-    public void UpdateTextsDebug()
+    public void EditorControls()
     {
-        //gyroUserAcceleration.text = "Turner rotation " + turner.transform.eulerAngles;
-        //Acceleration.text = "Acceleration : " + Input.acceleration.ToString();
+        Vector3 mouseRotation = Camera.main.ScreenToViewportPoint(Input.mousePosition);
+        mouseRotation -= new Vector3(.5f, .5f);
+        mouseRotation *= mouseScale;
+        targetRotation = new Vector3(-mouseRotation.y, mouseRotation.x);
+
+#pragma warning disable CS0618 // Type or member is obsolete
+        transform.RotateAround(Vector3.up, targetRotation.y * Time.deltaTime * Time.deltaTime);
+#pragma warning restore CS0618 // Type or member is obsolete
+
+
+        transform.eulerAngles = new Vector3(Mathf.Lerp(myEulerAngles.x, targetRotation.x, rotationSpeed), transform.eulerAngles.y, transform.eulerAngles.z);
+        cam.UpdateCamera(Mathf.InverseLerp(0, maxYRotation, Mathf.Abs(targetRotation.y)) * Mathf.Sign(targetRotation.y), Mathf.InverseLerp(0, maxXRotation, Mathf.Abs(targetRotation.x)) * Mathf.Sign(targetRotation.x));
     }
 
-#endregion
+    #endregion
 
     public enum PlayerState
     {

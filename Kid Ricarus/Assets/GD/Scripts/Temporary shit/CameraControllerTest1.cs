@@ -54,12 +54,12 @@ public class CameraControllerTest1 : MonoBehaviour
             rotationYAxis += velocityX;
             rotationXAxis -= velocityY;
 
-            rotationXAxis = ClampAngle(rotationXAxis, yMinLimit, yMaxLimit);
+            //rotationXAxis = ClampAngle(rotationXAxis, yMinLimit, yMaxLimit);
             rotationYAxis = ClampAngle(rotationYAxis, yMinLimit, yMaxLimit);
 
             Quaternion fromRotation = Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, 0);
-            Quaternion toRotation = Quaternion.Euler(rotationXAxis, rotationYAxis, 0);
-            Quaternion rotation = toRotation;
+            Quaternion toRotation = Quaternion.Euler(rotationXAxis , rotationYAxis, 0);
+            Quaternion rotation = toRotation * target.rotation;
 
             Vector3 negDistance = new Vector3(0.0f, 0.0f, -distance);
             Vector3 position = rotation * negDistance + target.position;
