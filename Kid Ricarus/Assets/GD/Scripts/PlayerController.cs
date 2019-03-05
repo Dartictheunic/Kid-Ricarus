@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour
 
 
     [Header("Variables pour l'éditeur")]
+    [Tooltip("A quel point la souris transmet d'input")]
     public float mouseScale;
     #endregion
 
@@ -30,7 +31,7 @@ public class PlayerController : MonoBehaviour
     #region liens à faire
     [Header("Liens à faire")]
     [Space(30)]
-    [Tooltip("Le truc qui sert à fake la rotation, plus représentatif du gyro du téléphone")]
+    [Tooltip("La caméra dans la scène")]
     public CameraController cam;
     #endregion
 
@@ -70,7 +71,6 @@ public class PlayerController : MonoBehaviour
     public void SetRotationSpeed(float newSpeed)
     {
         rotationSpeed = newSpeed;
-        //rotationSpeedText.text = rotationSpeed.ToString();
     }
 
     private void Start()
