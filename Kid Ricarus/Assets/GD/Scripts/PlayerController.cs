@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
     [Header("Variables Déplacement")]
     [Header("Variables Feel")]
     [Tooltip("Vitesse à laquelle le joueur avance devant lui")]
-    [Range(1f, 15f)]
+    [Range(.0001f, 1f)]
     public float forwardSpeed;
     [Tooltip("Vitesse maximale du joueur")]
     public float maxForwardSpeed;
@@ -114,6 +114,11 @@ public class PlayerController : MonoBehaviour
         {
             forwardSpeed -= Time.deltaTime;
         }
+
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            TimeManager.timeManager.SlowTime(.1f, 1, AnimationCurve.EaseInOut(0, .001f, 20, .5f));
+        }
 #endif
     }
 
@@ -159,9 +164,11 @@ public class PlayerController : MonoBehaviour
     {
         if (mustMoveForward)
         {
-            transform.Translate(transform.forward * forwardSpeed * 0.01f);
+            playerBody.MovePosition(transform.position + transform.forward * forwardSpeed);
         }
     }
+
+   
 
     #endregion
 

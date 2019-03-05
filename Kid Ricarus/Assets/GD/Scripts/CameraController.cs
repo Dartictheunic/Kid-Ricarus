@@ -60,7 +60,6 @@ public class CameraController : MonoBehaviour
             
             newZ = origin.position.z;
 
-            Debug.Log("xOffset : " + xOffset + "   yOffset" + yOffset);
             Vector3 toPosition = new Vector3(newX, newY, newZ);
             //Debug.Log("From position : " + transform.position +  "To Position + " + toPosition + "Delta :" + Time.deltaTime * camSpeed);
             transform.position = Vector3.Lerp(transform.position, toPosition, Time.deltaTime * camSpeed * Vector3.Distance(transform.position, toPosition));
