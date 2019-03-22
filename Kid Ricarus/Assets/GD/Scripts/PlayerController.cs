@@ -14,6 +14,8 @@ public class PlayerController : MonoBehaviour
     public float forwardSpeed;
     [Tooltip("Vitesse maximale du joueur")]
     public float maxForwardSpeed;
+    [Tooltip("Puissance de la gravité sur le joueur")]
+    public float gravity;
     [Header("Variables rotation")]
     public float rotationSpeed;
     public float maxXRotation;
@@ -78,6 +80,17 @@ public class PlayerController : MonoBehaviour
         Input.gyro.enabled = true;
         playerBody = GetComponent<Rigidbody>();
         StartCoroutine(CheckSmartphoneAngle());
+        ForcesDictionnaryScript.forcesDictionnaryScript.AddForce("Gravity", new Vector3(0,gravity, 0));
+    }
+
+    public void ChangePlayerGravity(float newGravityMultiplier)
+    {
+        ForcesDictionnaryScript.forcesDictionnaryScript.AddForce("Gravity", new Vector3(0,newGravityMultiplier, 0));
+    }
+
+    public void ResetPlayerGravity()
+    {
+        ForcesDictionnaryScript.forcesDictionnaryScript.AddForce("Gravity", new Vector3(0,gravity, 0));
     }
 
     public void ResetPlayer()
@@ -164,11 +177,9 @@ public class PlayerController : MonoBehaviour
     {
         if (mustMoveForward)
         {
-            playerBody.MovePosition(transform.position + transform.forward * forwardSpeed);
+            playerBody.MovePosition(transform.position + transform.forward * forwardSpeed + ForcesDictionnaryScript.forcesDictionnaryScript.ReturnAllForces());
         }
     }
-
-   
 
     #endregion
 
@@ -223,6 +234,7 @@ public class PlayerController : MonoBehaviour
     public enum PlayerState
     {
         grounded,
-        flying
+        flying,
+        interacting
     }
 }
