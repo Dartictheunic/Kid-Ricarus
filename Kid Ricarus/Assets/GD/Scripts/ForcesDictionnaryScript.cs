@@ -1,4 +1,16 @@
-﻿using System.Collections;
+﻿/*
+POUR AJOUTER UNE FORCE AU DICTIONNAIRE:
+ForcesDictionnaryScript.forcesDictionnaryScript.AddForce("Nom de ma force", Vector3(Ma force));
+
+Pour modifier une force c'est la même, globalement ça devrait le faire. Faites gaffe aux typos, pensez bien à collapse les debug.log
+Ca permettra de voir quand y'a des messages différents
+
+Pour une force temporaire, ajouter le temps qu'elle doit durer et si on doit la refresh lorsque la fonction est réapellée
+
+!!!LES FORCES DOIVENT ETRE EN VALEUR ABSOLUE!!!
+*/
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -8,35 +20,49 @@ using System.Linq;
 using System.Text;
 using System.Reflection;
 
-
 #region Monobehavior
-public class ForcesDictionnary : MonoBehaviour
+public class ForcesDictionnaryScript : MonoBehaviour
 {
-    // The dictionaries can be accessed throught a property
+    public static ForcesDictionnaryScript forcesDictionnaryScript;
     public StringVectorDictionary forcesDictionnary;
+
     public IDictionary<string, Vector3> StringVectorDictionary
     {
         get { return forcesDictionnary; }
         set { forcesDictionnary.CopyFrom(value); }
     }
 
-    void Reset()
+    private void Awake()
     {
-        // access by property
-        StringVectorDictionary = new Dictionary<string, Vector3>() { { "first key", Vector3.zero}, { "second key", Vector3.one}, { "third key", Vector3.right } };
+        forcesDictionnaryScript = this;
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R))
+        if(Input.GetKeyDown(KeyCode.A))
         {
-            forcesDictionnary.Add(Time.time.ToString(), new Vector3(UnityEngine.Random.Range(0, 150), UnityEngine.Random.Range(0, 150), UnityEngine.Random.Range(0, 150)));
+            AddForce("Portail", new Vector3(0, 1, Time.time), 2f, true);
         }
 
-        if (Input.GetKeyDown(KeyCode.O))
+        if (Input.GetKeyDown(KeyCode.Z))
         {
-            UnityEngine.Debug.Log(ReturnAllForces().ToString());
+            AddForce("Portail", new Vector3(0, 1, Time.time), 2f, false);
         }
+
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            AddForce("Tamer", new Vector3(0, 1, Time.time), 2f, true);
+        }
+
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            AddForce("Portail", new Vector3(0, 1, Time.time), 0.1f, true);
+        }
+    }
+
+    void Reset()
+    {
+        StringVectorDictionary = new Dictionary<string, Vector3>() { { "Empty key", Vector3.zero}};
     }
 
     public Vector3 ReturnAllForces()
@@ -49,6 +75,101 @@ public class ForcesDictionnary : MonoBehaviour
         }
 
         return allForces;
+    }
+
+    public void AddForce(string forceName, Vector3 forceToAdd)
+    {
+        if(forceToAdd.x != 0 || forceToAdd.y != 0 || forceToAdd.z != 0)
+        {
+            if(forcesDictionnary.ContainsKey(forceName))
+            {
+                Vector3 vectorToTry;
+                forcesDictionnary.TryGetValue(forceName, out vectorToTry);
+                if(vectorToTry == forceToAdd)
+                {
+                    Debug.LogWarning("You tried to assign the same value to the key");
+                    return;
+                }
+
+                else
+                {
+                    Debug.Log("Assigning Vector 3" + forceToAdd + " to key " + forceName);
+                    forcesDictionnary[forceName] = forceToAdd;
+                }
+            }
+
+            else
+            {
+                Debug.Log("Creating key " + forceName + " with value Vector3(" + forceToAdd.x + "," + forceToAdd.y + "," + forceToAdd.z + ")");
+                forcesDictionnary.Add(forceName, forceToAdd);
+            }
+        }
+
+        else
+        {
+            Debug.LogError("The vector was equal to zero, either remove the key or check the vector you're passing");
+            return;
+        }
+    }
+
+
+    public void AddForce(string forceName, Vector3 forceToAdd, float timeBeforeRemoving, bool refreshIfActive)
+    {
+        if (forceToAdd.x != 0 || forceToAdd.y != 0 || forceToAdd.z != 0)
+        {
+            if (forcesDictionnary.ContainsKey(forceName))
+            {
+                if(refreshIfActive)
+                {
+                    Debug.Log("Assigning Vector 3" + forceToAdd + " to key " + forceName + " for " + timeBeforeRemoving + " seconds");
+                    StopCoroutine("RemoveForceAfterTime");
+                    forcesDictionnary[forceName] = forceToAdd;
+                    StartCoroutine(RemoveForceAfterTime(timeBeforeRemoving, forceName));
+                }
+
+                else
+                {
+                    Debug.LogWarning("Key already exists, if you want to refresh it pass true");
+                }
+            }
+
+            else
+            {
+                Debug.Log("Creating key " + forceName + " with value Vector3(" + forceToAdd.x + "," + forceToAdd.y + "," + forceToAdd.z + ")" + " for " + timeBeforeRemoving + " seconds");
+                forcesDictionnary.Add(forceName, forceToAdd);
+                StartCoroutine(RemoveForceAfterTime(timeBeforeRemoving, forceName));
+            }
+        }
+
+        else
+        {
+            Debug.LogError("The vector was equal to zero, either remove the key or check the vector you're passing");
+            return;
+        }
+    }
+
+    public void RemoveForce(string forceName)
+    {
+        if (forcesDictionnary.ContainsKey(forceName))
+        {
+            forcesDictionnary.Remove(forceName);
+        }
+
+        else
+        {
+            Debug.LogError("Key does not exist"); 
+        }
+    }
+
+    IEnumerator RemoveForceAfterTime(float timeToWait, string keyName)
+    {
+        Debug.Log("RemoveStart");
+        yield return new WaitForSeconds(timeToWait);
+        if (forcesDictionnary.ContainsKey(keyName))
+        {
+            forcesDictionnary.Remove(keyName);
+        }
+        Debug.Log("RemoveEnd");
     }
 }
 
@@ -1150,4 +1271,5 @@ public abstract class SerializableHashSet<T> : SerializableHashSetBase, ISet<T>,
 #endif
 
 #endregion
+
 //issou
