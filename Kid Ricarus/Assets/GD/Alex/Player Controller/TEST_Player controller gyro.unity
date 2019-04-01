@@ -1538,7 +1538,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   forwardSpeed: 0.026
   maxForwardSpeed: 0
-  gravity: -0.01
+  gravity: -0.0001
   rotationSpeed: 0.1
   maxXRotation: 30
   maxYRotation: 1

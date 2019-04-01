@@ -39,25 +39,7 @@ public class ForcesDictionnaryScript : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.A))
-        {
-            AddForce("Portail", new Vector3(0, 1, Time.time), 2f, true);
-        }
 
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            AddForce("Portail", new Vector3(0, 1, Time.time), 2f, false);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            AddForce("Tamer", new Vector3(0, 1, Time.time), 2f, true);
-        }
-
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            AddForce("Portail", new Vector3(0, 1, Time.time), 0.1f, true);
-        }
     }
 
     void Reset()
@@ -65,6 +47,9 @@ public class ForcesDictionnaryScript : MonoBehaviour
         StringVectorDictionary = new Dictionary<string, Vector3>() { { "Empty key", Vector3.zero}};
     }
 
+    /// <summary>
+    /// Additionne tous les Vector3 dans le dictionnaire.
+    /// </summary>
     public Vector3 ReturnAllForces()
     {
         Vector3 allForces = Vector3.zero;
@@ -77,6 +62,9 @@ public class ForcesDictionnaryScript : MonoBehaviour
         return allForces;
     }
 
+    /// <summary>
+    /// Ajoute une force au dictionnaire.
+    /// </summary>
     public void AddForce(string forceName, Vector3 forceToAdd)
     {
         if(forceToAdd.x != 0 || forceToAdd.y != 0 || forceToAdd.z != 0)
@@ -112,7 +100,10 @@ public class ForcesDictionnaryScript : MonoBehaviour
         }
     }
 
-
+    /// <summary>
+    /// Ajoute une force TEMPORAIRE au dictionnaire.
+    /// </summary>
+    /// <param name="refreshIfActive">Si la force existe déjà, faut-il relancer le timer ?.</param>
     public void AddForce(string forceName, Vector3 forceToAdd, float timeBeforeRemoving, bool refreshIfActive)
     {
         if (forceToAdd.x != 0 || forceToAdd.y != 0 || forceToAdd.z != 0)
@@ -148,6 +139,9 @@ public class ForcesDictionnaryScript : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Retire une force du dictionnaire.
+    /// </summary>
     public void RemoveForce(string forceName)
     {
         if (forcesDictionnary.ContainsKey(forceName))
@@ -159,6 +153,30 @@ public class ForcesDictionnaryScript : MonoBehaviour
         {
             Debug.LogError("Key does not exist"); 
         }
+    }
+
+    /// <summary>
+    /// Retourne un string de toutes les forces, pratique pour les Debug.Log.
+    /// </summary>
+    public string AllForcesToString()
+    {
+        string forcesString = "All forces : (click on the log for all forces) \n";
+        for(int i = 0; i < forcesDictionnary.Count; i++)
+        {
+            forcesString += ForceToString(forcesDictionnary.ElementAt(i).Key);
+            forcesString += "\n";
+        }
+
+        return forcesString;
+    }
+
+    /// <summary>
+    /// Retourne un string de la force, pratique pour les Debug.Log.
+    /// </summary>
+    public string ForceToString(string forceName)
+    {
+        string forceDebug = ("(" + forcesDictionnary[forceName].x + "," + forcesDictionnary[forceName].y + "," + forcesDictionnary[forceName].z + ")");
+        return forceDebug;
     }
 
     IEnumerator RemoveForceAfterTime(float timeToWait, string keyName)
@@ -184,7 +202,7 @@ public class StringVectorDictionary : SerializableDictionary<string, Vector3> { 
 #endregion
 
 #region Bordel pour que les dictionnaires fonctionnent
-
+#if UNITY_EDITOR
 public static class DebugUtilsEditor
 {
     public static string ToString(SerializedProperty property)
@@ -807,7 +825,7 @@ public class SerializableDictionaryStoragePropertyDrawer : PropertyDrawer
         return EditorGUI.GetPropertyHeight(property);
     }
 }
-
+#endif
 
 public abstract class SerializableDictionaryBase
 {
