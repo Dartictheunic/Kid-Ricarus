@@ -5,50 +5,43 @@ using UnityEngine.UI;
 
 public class CameraDjuloh : MonoBehaviour
 {
-    [Header("MOUV BASE")]
-    public AnimationCurve cameraElasticity;
-    public float xSpeed = 50.0f;
-    public float ySpeed = 50.0f;
-    public float smoothTime = 2f;
-    public float rotationYAxis = 0.0f;
-    float rotationXAxis = 0.0f;
-    float velocityX = 0.0f;
-    float velocityY = 0.0f;
+    [Header("Anim Curves")]
+    public AnimationCurve cameraElasticityBig;
+    public AnimationCurve cameraElasticitySmall;
 
-    [Header("LES PETITES VARIABLES")]
-    public AnimationCurve smoothTimeCurve;
-    public AnimationCurve speedCurveDiveX;
-    public AnimationCurve speedCurveDiveY;
-    public AnimationCurve speedCurveFloatX;
-    public AnimationCurve speedCurveFloatY;
-    public float timeModOne;
-    public float timeModTwo;
-    public float bonusSpeedX;
-    public float bonusSpeedY;
-
-
-    [Header("DISTANCE")]
-    public float distance = 5.0f;
-    public float yMinLimit = -80f;
-    public float yMaxLimit = 80f;
-    public float distanceMin = .5f;
-    public float distanceMax = 200f;
-
-    [Header("POSITIONNEMENT")]
+    [Header("Movement")]
+    public float bigCamSpeed;
+    public float smallCamSpeed;
+    public float verticalCamSpeed;
+    public float accelerationCap;
     public Transform target;
+
+    [Header("DampTests")]
+    public float dampVelocityX;
+    public float dampVelocityY;
+    public float dampSmoothTime;
+
+
+
+
+    [Header("Refs")]
     Vector3 baseOffset;
     Quaternion baseRotation;
+    Camera cam;
     private Vector3 screenPoint;
     private Vector3 offset;
+    public Transform O;
+    public Transform X;
+    public Transform Y;
 
+    [Header("FOV")]
+    float baseDistance;
 
-    [Header("MISC")]
-    Camera cam;
-    bool updateCamera;
+    [Header("UI")]
+    public Text cameraText;
 
-
-
-
+    [Header("Bools")]
+    private bool updateCamera;
 
 
 
@@ -57,36 +50,61 @@ public class CameraDjuloh : MonoBehaviour
         cam = GetComponent<Camera>();
         Vector3 angles = transform.eulerAngles;
         baseRotation = transform.rotation;
-        rotationYAxis = (rotationYAxis == 0) ? angles.y : rotationYAxis;
-        rotationXAxis = angles.x;
-        distance = Vector3.Distance(target.position, transform.position);
         updateCamera = true;
     }
 
-    public void UpdateCamera(float yOffset, float xOffset)
+    private void Update()
+    {
+        transform.LookAt(target);
+    }
+
+    public void UpdateCamera(float yVelocity, float xVelocity)
     {
         if (updateCamera)
         {
-            velocityX += xSpeed * xOffset * cameraElasticity.Evaluate(Mathf.Abs(xOffset)) * Time.deltaTime;
-            velocityY += ySpeed * yOffset * cameraElasticity.Evaluate(Mathf.Abs(yOffset)) * Time.deltaTime * -1;
-            rotationYAxis += velocityX;
-            rotationXAxis -= velocityY;
+            Vector3 objective = Vector3.zero;
 
-            rotationXAxis = ClampAngle(rotationXAxis, yMinLimit, yMaxLimit);
-            rotationYAxis = ClampAngle(rotationYAxis, yMinLimit, yMaxLimit);
+            if (Mathf.Abs(xVelocity) > 5 && Vector3.Distance(X.position, transform.position) > accelerationCap) 
+            {
 
-            Quaternion fromRotation = Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, 0);
-            Quaternion toRotation = Quaternion.Euler(rotationXAxis, rotationYAxis, 0);
-            Quaternion rotation = toRotation;
+                // objective.x = Mathf.Lerp(O.position.x * Mathf.Sign(xVelocity * -1), X.position.x * Mathf.Sign(xVelocity * -1), Time.deltaTime * bigCamSpeed * cameraElasticityBig.Evaluate(Mathf.Abs(xVelocity)));
 
-            Vector3 negDistance = new Vector3(0.0f, 0.0f, -distance);
-            Vector3 position = rotation * negDistance + target.position;
+                objective.x = Mathf.SmoothDamp(O.position.x, X.position.x, ref dampVelocityX, dampSmoothTime);
+            }
 
-            transform.rotation = rotation;
-            transform.position = position;
+            else if (Mathf.Abs(xVelocity) > 5 && Vector3.Distance(X.position, transform.position) <= accelerationCap) 
+            {
+                // objective.x = Mathf.Lerp(O.position.x * Mathf.Sign(xVelocity * -1), X.position.x * Mathf.Sign(xVelocity * -1), Time.deltaTime * smallCamSpeed * cameraElasticityBig.Evaluate(Mathf.Abs(xVelocity)));
 
-            velocityX = Mathf.Lerp(velocityX, 0, Time.deltaTime * smoothTime);
-            velocityY = Mathf.Lerp(velocityY, 0, Time.deltaTime * smoothTime);
+                objective.x = Mathf.SmoothDamp(O.position.x, X.position.x, ref dampVelocityX, dampSmoothTime);
+
+            }
+
+            else //La cam doit rester près du player
+            {
+                objective.x = Mathf.Lerp(transform.position.x, O.position.x * Mathf.Sign(xVelocity * -1), Time.deltaTime * smallCamSpeed * cameraElasticitySmall.Evaluate(Mathf.Abs(xVelocity)));
+            }
+
+            if (Mathf.Abs(yVelocity) > 5 && Vector3.Distance(Y.position, transform.position) > accelerationCap)
+            {
+                objective.y = Mathf.Lerp(target.position.y * Mathf.Sign(yVelocity * -1), Y.position.y * Mathf.Sign(yVelocity * -1), Time.deltaTime * bigCamSpeed * cameraElasticityBig.Evaluate(Mathf.Abs(yVelocity)));
+            }
+
+            else if (Mathf.Abs(xVelocity) > 5 && Vector3.Distance(Y.position, transform.position) <= accelerationCap)
+            {
+                objective.y = Mathf.Lerp(target.position.y * Mathf.Sign(yVelocity * -1), Y.position.y * Mathf.Sign(yVelocity * -1), Time.deltaTime * smallCamSpeed * cameraElasticityBig.Evaluate(Mathf.Abs(yVelocity)));
+            }
+
+            else
+            {
+                objective.y = Mathf.Lerp(transform.position.y, target.position.x * Mathf.Sign(yVelocity * -1), yVelocity * Time.deltaTime * smallCamSpeed * cameraElasticitySmall.Evaluate(Mathf.Abs(yVelocity)));
+            }
+
+            float actualDistance = Vector3.Distance(objective, target.position);
+            objective.z = actualDistance - baseDistance;
+
+            transform.position = objective;
+            cameraText.text = objective.ToString();
         }
     }
 
@@ -109,5 +127,6 @@ public class CameraDjuloh : MonoBehaviour
     void Awake()
     {
         baseOffset = target.position - transform.position;
+        baseDistance = target.position.z - transform.position.z;
     }
 }
