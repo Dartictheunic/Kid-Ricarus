@@ -139,7 +139,7 @@ public class PlayerControllerDjuloh : MonoBehaviour
         Vector3 mouseRotation = maincam.ScreenToViewportPoint(Input.mousePosition);
         mouseRotation -= new Vector3(.5f, .5f);
         mouseRotation *= mouseScale;
-        Debug.Log(mouseRotation);
+        //Debug.Log(mouseRotation);
         targetRotation = new Vector3(-mouseRotation.y, mouseRotation.x);
         transform.eulerAngles = Vector3.Lerp(myEulerAngles, targetRotation, rotationSpeed);
         RotateTurner();
