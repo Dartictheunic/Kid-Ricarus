@@ -1,3 +1,4 @@
+<<<<<<< HEAD:Kid Ricarus/Assets/Editor/BezierSplineInspector.cs.meta
 fileFormatVersion: 2
 guid: 2c3d6b630546d084cb2bc1a5a3b66543
 MonoImporter:
@@ -9,3 +10,16 @@ MonoImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+=======
+fileFormatVersion: 2
+guid: 66be6dc05212db649b00a8e3bbea7737
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+>>>>>>> master:Kid Ricarus/Assets/Editor/BezierCurveInspector.cs.meta

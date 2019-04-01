@@ -22,6 +22,10 @@ public class PlayerController : MonoBehaviour
     public float maxYRotation;
     [Tooltip("Angle que l'on peut donner au téléphone au maximum")]
     public float maxInputTaken;
+    [Tooltip("Temps où le joueur peut incliner le téléphone vers le haut de base")]
+    public float essenceDeSecours;
+    [Tooltip("Fenetre pendant laquelle le brackage est checké")]
+    public float timeForBraquage;
 
 
     [Header("Variables pour l'éditeur")]
@@ -43,6 +47,8 @@ public class PlayerController : MonoBehaviour
     public PlayerState actualPlayerState = PlayerState.flying;
     [Tooltip("Le joueur doit-il avancer ?")]
     public bool mustMoveForward = true;
+    [Tooltip("Energie accumulée en piqué")]
+    public float energieAccumuleePique;
 
     #region debug text
     [Header("Debug ou temporaire")]
@@ -59,8 +65,12 @@ public class PlayerController : MonoBehaviour
     Vector3 targetRotation;
     Vector3 myEulerAngles;
     float xAccelerationDelta;
+    float lastXRotation;
+    float timeBeforeResetRotation;
     float zAccelerationDelta;
     Rigidbody playerBody;
+    float timeSpendInPique;
+    float forceAccumulatedByPique;
 
     #endregion
 
@@ -106,8 +116,11 @@ public class PlayerController : MonoBehaviour
     {
         Move();
 
-#if !UNITY_EDITOR
-        Rotate();
+#if UNITY_EDITOR
+        if(actualPlayerState == PlayerState.flying)
+        {
+            Rotate();
+        }
 #endif
 
 #if UNITY_EDITOR
@@ -128,10 +141,6 @@ public class PlayerController : MonoBehaviour
             forwardSpeed -= Time.deltaTime;
         }
 
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            TimeManager.timeManager.SlowTime(.1f, 1, AnimationCurve.EaseInOut(0, .001f, 20, .5f));
-        }
 #endif
     }
 
@@ -141,9 +150,11 @@ public class PlayerController : MonoBehaviour
 
     public Vector3 GetPhoneRotations()
     {
+        // Store la Old X rotation, faire le delta entre les 2 et si le mathf.abs du delta est supérieur à X et que la valeur de new X > .8 on braque
         truePhoneDelta = Input.acceleration - basePhoneAngle;
         xAccelerationDelta = -truePhoneDelta.x;
         zAccelerationDelta = (truePhoneDelta.y - truePhoneDelta.z) / 2;
+        gyroRotationRateUnbiaised.text = "XRotation :" + zAccelerationDelta;
 
         float newXRotation = Mathf.InverseLerp(-maxInputTaken, maxInputTaken,targetRotation.x);
         float newYRotation = Mathf.InverseLerp(-maxInputTaken, maxInputTaken,targetRotation.z);
@@ -151,6 +162,7 @@ public class PlayerController : MonoBehaviour
         newXRotation = Mathf.InverseLerp(-maxInputTaken, maxInputTaken, zAccelerationDelta);
 
         newYRotation = Mathf.InverseLerp(-maxInputTaken, maxInputTaken, xAccelerationDelta);
+        gyroRotationRate.text = "New XRotation :" + newXRotation;
         gyroAttitude.text = "newYRotation :  " + newYRotation;
 
         Vector3 calculatedVector = new Vector3(Mathf.Lerp(-maxXRotation, maxXRotation, newXRotation), Mathf.Lerp(-maxYRotation, maxYRotation, newYRotation), 0);
@@ -177,7 +189,7 @@ public class PlayerController : MonoBehaviour
     {
         if (mustMoveForward)
         {
-            playerBody.MovePosition(transform.position + transform.forward * forwardSpeed + ForcesDictionnaryScript.forcesDictionnaryScript.ReturnAllForces());
+            playerBody.MovePosition(transform.position + forwardSpeed * transform.forward + ForcesDictionnaryScript.forcesDictionnaryScript.ReturnAllForces());
         }
     }
 
@@ -189,7 +201,6 @@ public class PlayerController : MonoBehaviour
         {
             ResetPlayer();
         }
-
         myEulerAngles = returnGoodEulers(transform.eulerAngles);
     }
 
@@ -235,6 +246,7 @@ public class PlayerController : MonoBehaviour
     {
         grounded,
         flying,
-        interacting
+        interacting,
+        pique
     }
 }

@@ -1,3 +1,4 @@
+<<<<<<< HEAD:Kid Ricarus/Assets/GD/Louis/SCRIPT/MazeSpline/NewBehaviourScript.cs.meta
 fileFormatVersion: 2
 guid: 6fd32193b65d4bb4d9ebb4027ca8855f
 MonoImporter:
@@ -9,3 +10,16 @@ MonoImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+=======
+fileFormatVersion: 2
+guid: d3b416db17bda9240b01257ecb8e5be1
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+>>>>>>> master:Kid Ricarus/Assets/GD/Louis/SCRIPT/Spline/BezierCurve.cs.meta
