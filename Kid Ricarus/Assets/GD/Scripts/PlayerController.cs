@@ -61,6 +61,8 @@ public class PlayerController : MonoBehaviour
     float xAccelerationDelta;
     float zAccelerationDelta;
     Rigidbody playerBody;
+    float timeSpendInPique;
+    float forceAccumulatedByPique;
 
     #endregion
 
@@ -128,10 +130,6 @@ public class PlayerController : MonoBehaviour
             forwardSpeed -= Time.deltaTime;
         }
 
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            TimeManager.timeManager.SlowTime(.1f, 1, AnimationCurve.EaseInOut(0, .001f, 20, .5f));
-        }
 #endif
     }
 
@@ -177,7 +175,7 @@ public class PlayerController : MonoBehaviour
     {
         if (mustMoveForward)
         {
-            playerBody.MovePosition(transform.position + transform.forward * forwardSpeed + ForcesDictionnaryScript.forcesDictionnaryScript.ReturnAllForces());
+            playerBody.MovePosition(transform.position + transform.forward * forwardSpeed + transform.up + ForcesDictionnaryScript.forcesDictionnaryScript.ReturnAllForces());
         }
     }
 
