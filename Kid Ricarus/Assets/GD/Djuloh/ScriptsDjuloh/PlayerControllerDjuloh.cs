@@ -2,19 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEditor;
 
 
 public class PlayerControllerDjuloh : MonoBehaviour
 {
-    public Camera maincam;
+    #region pute
+    public Camera CamDjuloh;
+    #endregion
+
     #region Variables Feel
     [Header("Variables Déplacement")]
     [Header("Variables Feel")]
     [Tooltip("Vitesse à laquelle le joueur avance devant lui")]
-    [Range(1f, 15f)]
+    [Range(.0001f, 1f)]
     public float forwardSpeed;
     [Tooltip("Vitesse maximale du joueur")]
     public float maxForwardSpeed;
+    [Tooltip("Puissance de la gravité sur le joueur")]
+    public float gravity;
     [Header("Variables rotation")]
     public float rotationSpeed;
     public float maxXRotation;
@@ -24,16 +30,17 @@ public class PlayerControllerDjuloh : MonoBehaviour
 
 
     [Header("Variables pour l'éditeur")]
+    [Tooltip("A quel point la souris transmet d'input")]
     public float mouseScale;
     #endregion
+
 
 
     #region liens à faire
     [Header("Liens à faire")]
     [Space(30)]
-    [Tooltip("Le truc qui sert à fake la rotation, plus représentatif du gyro du téléphone")]
-    public Turner turner;
-    public CameraControllerTest1 cam;
+    [Tooltip("La caméra dans la scène")]
+    public CameraDjuloh cam;
     #endregion
 
     #region variables Prog
@@ -60,9 +67,9 @@ public class PlayerControllerDjuloh : MonoBehaviour
     float xAccelerationDelta;
     float zAccelerationDelta;
     Rigidbody playerBody;
+    float timeSpendInPique;
+    float forceAccumulatedByPique;
 
-
-    Vector3 lastMousePosition;
     #endregion
 
     public IEnumerator CheckSmartphoneAngle()
@@ -74,7 +81,6 @@ public class PlayerControllerDjuloh : MonoBehaviour
     public void SetRotationSpeed(float newSpeed)
     {
         rotationSpeed = newSpeed;
-        //rotationSpeedText.text = rotationSpeed.ToString();
     }
 
     private void Start()
@@ -82,6 +88,17 @@ public class PlayerControllerDjuloh : MonoBehaviour
         Input.gyro.enabled = true;
         playerBody = GetComponent<Rigidbody>();
         StartCoroutine(CheckSmartphoneAngle());
+        ForcesDictionnaryScript.forcesDictionnaryScript.AddForce("Gravity", new Vector3(0, gravity, 0));
+    }
+
+    public void ChangePlayerGravity(float newGravityMultiplier)
+    {
+        ForcesDictionnaryScript.forcesDictionnaryScript.AddForce("Gravity", new Vector3(0, newGravityMultiplier, 0));
+    }
+
+    public void ResetPlayerGravity()
+    {
+        ForcesDictionnaryScript.forcesDictionnaryScript.AddForce("Gravity", new Vector3(0, gravity, 0));
     }
 
     public void ResetPlayer()
@@ -96,10 +113,9 @@ public class PlayerControllerDjuloh : MonoBehaviour
     private void FixedUpdate()
     {
         Move();
-        Rotate();
 
 #if !UNITY_EDITOR
-        UpdateTextsDebug();
+        Rotate();
 #endif
 
 #if UNITY_EDITOR
@@ -120,33 +136,10 @@ public class PlayerControllerDjuloh : MonoBehaviour
             forwardSpeed -= Time.deltaTime;
         }
 
-        if (!Input.GetKey(KeyCode.A) || !Input.GetKey(KeyCode.E))
-        {
-            forwardSpeed -= Mathf.Lerp(forwardSpeed, 0f, 5f);
-
-        }
-
-        if (forwardSpeed <= 1)
-        {
-            forwardSpeed += 0.01f;
-
-        }
 #endif
     }
 
-    public void EditorControls()
-    {
-        Vector3 mouseRotation = maincam.ScreenToViewportPoint(Input.mousePosition);
-        mouseRotation -= new Vector3(.5f, .5f);
-        mouseRotation *= mouseScale;
-        Debug.Log(mouseRotation);
-        targetRotation = new Vector3(-mouseRotation.y, mouseRotation.x);
-        transform.eulerAngles = Vector3.Lerp(myEulerAngles, targetRotation, rotationSpeed);
-        RotateTurner();
-        cam.UpdateCamera(targetRotation.x, targetRotation.y);
 
-        lastMousePosition = Input.mousePosition;
-    }
 
     #region Gestion Deplacement
 
@@ -162,6 +155,7 @@ public class PlayerControllerDjuloh : MonoBehaviour
         newXRotation = Mathf.InverseLerp(-maxInputTaken, maxInputTaken, zAccelerationDelta);
 
         newYRotation = Mathf.InverseLerp(-maxInputTaken, maxInputTaken, xAccelerationDelta);
+        gyroAttitude.text = "newYRotation :  " + newYRotation;
 
         Vector3 calculatedVector = new Vector3(Mathf.Lerp(-maxXRotation, maxXRotation, newXRotation), Mathf.Lerp(-maxYRotation, maxYRotation, newYRotation), 0);
         calculatedVector.y *= -1;
@@ -171,27 +165,23 @@ public class PlayerControllerDjuloh : MonoBehaviour
     public void Rotate()
     {
         Vector3 phoneRotations = GetPhoneRotations();
-        //gyroRotationRate.text = "Vector 3 taken : " + phoneRotations;
-
         targetRotation = phoneRotations;
-        transform.eulerAngles = Vector3.Lerp(myEulerAngles, targetRotation, rotationSpeed);
-        RotateTurner();
-        cam.UpdateCamera(targetRotation.x, targetRotation.y);
-        gyroAttitude.text = "Update cam :  " + targetRotation.x + " x & " + targetRotation.y;
-        //gyroRotationRateUnbiaised.text = "Character eulerAngles : " + transform.eulerAngles;
-    }
 
-    public void RotateTurner()
-    {
-        Vector3 turnerRotation = new Vector3(targetRotation.x, -targetRotation.z * 4, 0);
-        turner.UpdateTurnerRotation(turnerRotation);
+
+#pragma warning disable CS0618 // Type or member is obsolete
+        transform.RotateAround(Vector3.up, targetRotation.y * Time.deltaTime * rotationSpeed);
+#pragma warning restore CS0618 // Type or member is obsolete
+
+
+        transform.eulerAngles = new Vector3(Mathf.Lerp(myEulerAngles.x, targetRotation.x, rotationSpeed), transform.eulerAngles.y, transform.eulerAngles.z);
+        cam.UpdateCamera(Mathf.InverseLerp(0, maxYRotation, Mathf.Abs(targetRotation.y)) * Mathf.Sign(targetRotation.y), Mathf.InverseLerp(0, maxXRotation, Mathf.Abs(targetRotation.x)) * Mathf.Sign(targetRotation.x));
     }
 
     public void Move()
     {
         if (mustMoveForward)
         {
-            transform.Translate(transform.forward * forwardSpeed * 0.01f);
+            playerBody.MovePosition(transform.position + transform.forward * forwardSpeed + ForcesDictionnaryScript.forcesDictionnaryScript.ReturnAllForces());
         }
     }
 
@@ -204,27 +194,43 @@ public class PlayerControllerDjuloh : MonoBehaviour
             ResetPlayer();
         }
 
-        myEulerAngles = transform.eulerAngles;
-        if (myEulerAngles.x > 180)
+        myEulerAngles = returnGoodEulers(transform.eulerAngles);
+    }
+
+    public Vector3 returnGoodEulers(Vector3 vectorToReturn)
+    {
+        if (vectorToReturn.x > 180)
         {
-            myEulerAngles.x -= 360;
+            vectorToReturn.x -= 360;
         }
-        if (myEulerAngles.y > 180)
+        if (vectorToReturn.y > 180)
         {
-            myEulerAngles.y -= 360;
+            vectorToReturn.y -= 360;
         }
-        if (myEulerAngles.z > 180)
+        if (vectorToReturn.z > 180)
         {
-            myEulerAngles.z -= 360;
+            vectorToReturn.z -= 360;
         }
+
+        return vectorToReturn;
     }
 
     #region Debug
 
-    public void UpdateTextsDebug()
+    public void EditorControls()
     {
-        //gyroUserAcceleration.text = "Turner rotation " + turner.transform.eulerAngles;
-        //Acceleration.text = "Acceleration : " + Input.acceleration.ToString();
+        Vector3 mouseRotation = CamDjuloh.ScreenToViewportPoint(Input.mousePosition);
+        mouseRotation -= new Vector3(.5f, .5f);
+        mouseRotation *= mouseScale;
+        targetRotation = new Vector3(-mouseRotation.y, mouseRotation.x);
+
+#pragma warning disable CS0618 // Type or member is obsolete
+        transform.RotateAround(Vector3.up, targetRotation.y * Time.deltaTime * Time.deltaTime);
+#pragma warning restore CS0618 // Type or member is obsolete
+
+
+        transform.eulerAngles = new Vector3(Mathf.Lerp(myEulerAngles.x, targetRotation.x, rotationSpeed), transform.eulerAngles.y, transform.eulerAngles.z);
+        cam.UpdateCamera(Mathf.InverseLerp(0, maxYRotation, Mathf.Abs(targetRotation.y)) * Mathf.Sign(targetRotation.y), Mathf.InverseLerp(0, maxXRotation, Mathf.Abs(targetRotation.x)) * Mathf.Sign(targetRotation.x));
     }
 
     #endregion
@@ -232,6 +238,7 @@ public class PlayerControllerDjuloh : MonoBehaviour
     public enum PlayerState
     {
         grounded,
-        flying
+        flying,
+        interacting
     }
 }
