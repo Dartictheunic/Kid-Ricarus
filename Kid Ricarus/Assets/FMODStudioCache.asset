@@ -18,7 +18,7 @@ MonoBehaviour:
   EditorEvents: []
   MasterBankRef: {fileID: 114231952325714432}
   StringsBankRef: {fileID: 114571888495958746}
-  stringsBankWriteTime: 636897979091307719
+  stringsBankWriteTime: 636898025312484518
   cacheVersion: 2
 --- !u!114 &114231952325714432
 MonoBehaviour:
@@ -34,7 +34,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: C:\Users\c.castric\Documents\KID RICARUS\Kid-Ricarus\Kid Ricarus\Assets\FMOD\EFIRPROJECT\Build\Desktop\Master
     Bank.bank
-  lastModified: 636897979091267781
+  lastModified: 636898025312444572
   LoadResult: 0
   FileSizes:
   - Name: Desktop
@@ -53,7 +53,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Path: Assets\FMOD\EFIRPROJECT\Build\Desktop\Master Bank.strings.bank
-  lastModified: 636897979091307719
+  lastModified: 636898025312484518
   LoadResult: 0
   FileSizes:
   - Name: Desktop
