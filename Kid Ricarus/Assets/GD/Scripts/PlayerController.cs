@@ -49,6 +49,9 @@ public class PlayerController : MonoBehaviour
     public bool mustMoveForward = true;
     [Tooltip("Energie accumulée en piqué")]
     public float energieAccumuleePique;
+    [Tooltip("Multiplicateur d'énergie du piqué")]
+    [Range(0f,1f)]
+    public float piqueMultiplicator;
 
     #region debug text
     [Header("Debug ou temporaire")]
@@ -66,11 +69,11 @@ public class PlayerController : MonoBehaviour
     Vector3 myEulerAngles;
     float xAccelerationDelta;
     float lastXRotation;
+    float lastYPosition;
     float timeBeforeResetRotation;
     float zAccelerationDelta;
     Rigidbody playerBody;
-    float timeSpendInPique;
-    float forceAccumulatedByPique;
+    float timeSpentInPique;
 
     #endregion
 
@@ -116,7 +119,7 @@ public class PlayerController : MonoBehaviour
     {
         Move();
 
-#if UNITY_EDITOR
+#if !UNITY_EDITOR
         if(actualPlayerState == PlayerState.flying)
         {
             Rotate();
@@ -147,6 +150,21 @@ public class PlayerController : MonoBehaviour
 
 
     #region Gestion Deplacement
+    public IEnumerator TemporaryReturnOfDrop(float DropTime)
+    {
+        yield return new WaitForSeconds(DropTime);
+        mustMoveForward = true;
+        ForcesDictionnaryScript.forcesDictionnaryScript.RemoveForce("Drop");
+        actualPlayerState = PlayerState.pique;
+        lastYPosition = transform.position.y;
+    }
+
+    public IEnumerator TemporaryEndAscend(float AscendTime)
+    {
+        yield return new WaitForSeconds(AscendTime);
+        mustMoveForward = true;
+        actualPlayerState = PlayerState.flying;
+    }
 
     public Vector3 GetPhoneRotations()
     {
@@ -155,6 +173,38 @@ public class PlayerController : MonoBehaviour
         xAccelerationDelta = -truePhoneDelta.x;
         zAccelerationDelta = (truePhoneDelta.y - truePhoneDelta.z) / 2;
         gyroRotationRateUnbiaised.text = "XRotation :" + zAccelerationDelta;
+
+        if(timeBeforeResetRotation > timeForBraquage)
+        {
+            if(Mathf.Abs(lastXRotation - zAccelerationDelta) > .45f)
+            {
+                rotationSpeedText.text = "BRAK";
+                if(actualPlayerState == PlayerState.flying)
+                {
+                    mustMoveForward = false;
+                    ForcesDictionnaryScript.forcesDictionnaryScript.AddForce("Drop", transform.forward * forwardSpeed / 10);
+                }
+
+                else if (actualPlayerState == PlayerState.pique && zAccelerationDelta <.1f)
+                {
+                    ForcesDictionnaryScript.forcesDictionnaryScript.AddForce("FinPique", new Vector3(0f,energieAccumuleePique/timeSpentInPique,0f), timeSpentInPique, false);
+                    actualPlayerState = PlayerState.forceAscend;
+                }
+            }
+
+            else
+            {
+                rotationSpeedText.text = "pas brak";
+            }
+
+            timeBeforeResetRotation = 0f;
+            lastXRotation = zAccelerationDelta;
+        }
+
+        else
+        {
+            timeBeforeResetRotation += Time.deltaTime;
+        }
 
         float newXRotation = Mathf.InverseLerp(-maxInputTaken, maxInputTaken,targetRotation.x);
         float newYRotation = Mathf.InverseLerp(-maxInputTaken, maxInputTaken,targetRotation.z);
@@ -173,16 +223,40 @@ public class PlayerController : MonoBehaviour
     public void Rotate()
     {
         Vector3 phoneRotations = GetPhoneRotations();
-        targetRotation = phoneRotations;
+
+        if (actualPlayerState == PlayerState.flying)
+        {
+
+    #pragma warning disable CS0618 // Type or member is obsolete
+            transform.RotateAround(Vector3.up, phoneRotations.y * Time.deltaTime * rotationSpeed);
+    #pragma warning restore CS0618 // Type or member is obsolete
 
 
-#pragma warning disable CS0618 // Type or member is obsolete
-        transform.RotateAround(Vector3.up, targetRotation.y * Time.deltaTime * rotationSpeed);
-#pragma warning restore CS0618 // Type or member is obsolete
+            transform.eulerAngles = new Vector3(Mathf.Lerp(myEulerAngles.x, phoneRotations.x, rotationSpeed), transform.eulerAngles.y, transform.eulerAngles.z);
+            cam.UpdateCamera(Mathf.InverseLerp(0, maxYRotation, Mathf.Abs(phoneRotations.y)) * Mathf.Sign(phoneRotations.y), Mathf.InverseLerp(0, maxXRotation, Mathf.Abs(phoneRotations.x)) * Mathf.Sign(phoneRotations.x));
+        }
 
+        else if(actualPlayerState == PlayerState.pique)
+        {
 
-        transform.eulerAngles = new Vector3(Mathf.Lerp(myEulerAngles.x, targetRotation.x, rotationSpeed), transform.eulerAngles.y, transform.eulerAngles.z);
-        cam.UpdateCamera(Mathf.InverseLerp(0, maxYRotation, Mathf.Abs(targetRotation.y)) * Mathf.Sign(targetRotation.y), Mathf.InverseLerp(0, maxXRotation, Mathf.Abs(targetRotation.x)) * Mathf.Sign(targetRotation.x));
+            if(phoneRotations.y > .7f)
+            {
+                phoneRotations.x = phoneRotations.x / 2;
+            }
+
+            if(phoneRotations.y < .1f)
+            {
+                actualPlayerState = PlayerState.flying;
+            }
+
+            else
+            {
+                energieAccumuleePique += (lastYPosition - transform.position.y) * piqueMultiplicator;
+            }
+
+            timeSpentInPique += Time.deltaTime;
+            lastYPosition = transform.position.y;
+        }
     }
 
     public void Move()
@@ -190,6 +264,11 @@ public class PlayerController : MonoBehaviour
         if (mustMoveForward)
         {
             playerBody.MovePosition(transform.position + forwardSpeed * transform.forward + ForcesDictionnaryScript.forcesDictionnaryScript.ReturnAllForces());
+        }
+
+        else
+        {
+            playerBody.MovePosition(transform.position + ForcesDictionnaryScript.forcesDictionnaryScript.ReturnAllForces());
         }
     }
 
@@ -247,6 +326,7 @@ public class PlayerController : MonoBehaviour
         grounded,
         flying,
         interacting,
-        pique
+        pique,
+        forceAscend
     }
 }
