@@ -62,6 +62,36 @@ public class ForcesDictionnaryScript : MonoBehaviour
         return allForces;
     }
 
+
+    /// <summary>
+    /// Retire toutes les forces du dictionnaire de forces.
+    /// </summary>
+    /// <param name="keepGravity">Laisser la gravité ?.</param>
+
+    public void RemoveAllForces(bool keepGravity)
+    {
+        foreach (string ich in forcesDictionnary.Keys)
+        {
+            if(keepGravity)
+            {
+                if(ich == "Gravity")
+                {
+                    Debug.Log("Didn't remove gravity");
+                }
+
+                else
+                {
+                    forcesDictionnary.Remove(ich);
+                }
+            }
+
+            else
+            {
+                forcesDictionnary.Remove(ich);
+            }
+        }
+    }
+
     /// <summary>
     /// Ajoute une force au dictionnaire.
     /// </summary>

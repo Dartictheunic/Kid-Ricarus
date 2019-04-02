@@ -1540,13 +1540,16 @@ MonoBehaviour:
   maxForwardSpeed: 0
   gravity: -0.0001
   rotationSpeed: 0.1
-  maxXRotation: 30
+  maxXRotation: 60
   maxYRotation: 1
   maxInputTaken: 0.25
+  essenceDeSecours: 5
+  timeForBraquage: 0.05
   mouseScale: 20
   cam: {fileID: 1115040858}
   actualPlayerState: 1
   mustMoveForward: 1
+  energieAccumuleePique: 0
   Acceleration: {fileID: 949627888}
   gyroAttitude: {fileID: 990664140}
   gyroRotationRate: {fileID: 1612070632}

@@ -14,7 +14,7 @@ public class CameraController : MonoBehaviour
     public Transform yTransformUp;
     public Transform yTransformDown;
 
-    Vector3 baseOffset;
+    Vector3 basePosition;
     Quaternion baseRotation;
     Camera cam;
     bool updateCamera;
@@ -28,6 +28,7 @@ public class CameraController : MonoBehaviour
         cam = GetComponent<Camera>();
         Vector3 angles = transform.eulerAngles;
         baseRotation = transform.rotation;
+        basePosition = transform.position;
         updateCamera = true;
     }
 
@@ -70,13 +71,8 @@ public class CameraController : MonoBehaviour
 
     public void ResetCameraPosition()
     {
-        transform.position = baseOffset;
+        transform.position = basePosition;
         transform.rotation = baseRotation;
-    }
-
-    void Awake()
-    {
-        baseOffset = target.position - transform.position;
     }
 
 }
