@@ -2,20 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Aura : MonoBehaviour
+public class CercleAura : MonoBehaviour
 {
-    public PlayerController playerScript;
-
     public AnimationCurve boostCurve;
-    public float multiplier;
-
-    float baseForwardSpeed;
-    float curveTime = 4f;
+    private Transform target; 
+    public float baseForwardSpeed;
+    public float curveTime = 4f;
+    public float duration ;
+    
+    
 
     // Update is called once per frame 
     void FixedUpdate()
     {
-        if (curveTime < 3.0f)
+        if (curveTime < duration)
         {
             applyBoostAura();
         }
@@ -25,19 +25,31 @@ public class Aura : MonoBehaviour
     {
         curveTime += Time.deltaTime;
         float curveAmount = boostCurve.Evaluate(curveTime) * baseForwardSpeed;
-        playerScript.forwardSpeed = curveAmount;
-        Debug.Log(playerScript.forwardSpeed);
+        ForcesDictionnaryScript.forcesDictionnaryScript.AddForce("Boost " + transform.name, target.forward * curveAmount); 
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        startBoostAura();
+        if (other.GetComponent<PlayerControllerDjuloh>() != null)
+        {     
+         startBoostAura();
+         target = other.transform;
+            StartCoroutine(StopAcceleration());
+        }
     }
 
     public void startBoostAura()
     {
-        baseForwardSpeed = playerScript.forwardSpeed;
         curveTime = 0f;
         Debug.Log("oui ca marche");
     }
+
+    private IEnumerator StopAcceleration()
+    {
+        yield return new WaitForSeconds(duration + 0.1f);
+        ForcesDictionnaryScript.forcesDictionnaryScript.RemoveForce("Boost " + transform.name);
+
+    }
+
+
 }

@@ -1,9 +1,5 @@
 fileFormatVersion: 2
-<<<<<<< HEAD
 guid: a4bb89731d678574ca16a97b5195e886
-=======
-guid: b2c11f1e03736f748bd861d7bf4f8952
->>>>>>> master
 PluginImporter:
   externalObjects: {}
   serializedVersion: 2
@@ -15,30 +11,10 @@ PluginImporter:
   isExplicitlyReferenced: 0
   platformData:
   - first:
-<<<<<<< HEAD
       Any: 
     second:
       enabled: 1
       settings: {}
-=======
-      '': OSXIntel
-    second:
-      enabled: 0
-      settings:
-        CPU: AnyCPU
-  - first:
-      '': OSXIntel64
-    second:
-      enabled: 0
-      settings:
-        CPU: AnyCPU
-  - first:
-      Android: Android
-    second:
-      enabled: 0
-      settings:
-        CPU: AnyCPU
->>>>>>> master
   - first:
       Editor: Editor
     second:
@@ -46,10 +22,6 @@ PluginImporter:
       settings:
         CPU: x86
         DefaultValueInitialized: true
-<<<<<<< HEAD
-=======
-        OS: AnyOS
->>>>>>> master
   - first:
       Facebook: Win
     second:
@@ -65,11 +37,7 @@ PluginImporter:
   - first:
       Standalone: Linux
     second:
-<<<<<<< HEAD
       enabled: 1
-=======
-      enabled: 0
->>>>>>> master
       settings:
         CPU: x86
   - first:
@@ -77,7 +45,6 @@ PluginImporter:
     second:
       enabled: 0
       settings:
-<<<<<<< HEAD
         CPU: None
   - first:
       Standalone: LinuxUniversal
@@ -85,25 +52,12 @@ PluginImporter:
       enabled: 1
       settings:
         CPU: x86
-=======
-        CPU: x86_64
-  - first:
-      Standalone: LinuxUniversal
-    second:
-      enabled: 0
-      settings:
-        CPU: AnyCPU
->>>>>>> master
   - first:
       Standalone: OSXUniversal
     second:
       enabled: 0
       settings:
-<<<<<<< HEAD
         CPU: x86
-=======
-        CPU: AnyCPU
->>>>>>> master
   - first:
       Standalone: Win
     second:

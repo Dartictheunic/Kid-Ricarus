@@ -12,24 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d32cf7c32a3ed8347bac48ef5ed56d82, type: 3}
   m_Name: FMODStudioCache
   m_EditorClassIdentifier: 
-<<<<<<< HEAD
-  EditorBanks: []
-  EditorEvents: []
-  MasterBankRef: {fileID: 0}
-  StringsBankRef: {fileID: 0}
-  stringsBankWriteTime: 0
-  cacheVersion: 2
-=======
   EditorBanks:
-  - {fileID: 114571888495958746}
-  - {fileID: 114222810507132196}
+  - {fileID: 114384682783066822}
+  - {fileID: 114359192584282918}
   EditorEvents:
-  - {fileID: 114353935186009952}
-  MasterBankRef: {fileID: 114222810507132196}
-  StringsBankRef: {fileID: 114571888495958746}
-  stringsBankWriteTime: 636898116382515785
+  - {fileID: 114546267769503370}
+  MasterBankRef: {fileID: 114359192584282918}
+  StringsBankRef: {fileID: 114384682783066822}
+  stringsBankWriteTime: 636898118208326093
   cacheVersion: 2
---- !u!114 &114088218655015824
+--- !u!114 &114359192584282918
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,35 +33,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Path: C:\Users\a.jouanneau\Documents\Unity\Mobile 4v3\Kid Ricarus\Kid Ricarus\Assets\FMOD\EFIRPROJECT\Build\Desktop\Master
+  Path: C:\Users\l.houyez\Documents\Unity\Kid-Ricarus\Kid Ricarus\Assets\StreamingAssets\Master
     Bank.bank
-  lastModified: 636898039302993668
-  LoadResult: 0
-  FileSizes:
-  - Name: Desktop
-    Value: 3631520
-  Exists: 0
---- !u!114 &114222810507132196
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Path: C:\Users\a.jouanneau\Documents\Unity\Mobile 4v3\Kid Ricarus\Kid Ricarus\Assets\StreamingAssets\Master
-    Bank.bank
-  lastModified: 636898116355259674
+  lastModified: 636898118208565914
   LoadResult: 0
   FileSizes:
   - Name: 
     Value: 3631520
   Exists: 1
---- !u!114 &114231952325714432
+--- !u!114 &114384682783066822
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -81,15 +53,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Path: C:\Users\a.jouanneau\Documents\Unity\Mobile 4v3\Kid Ricarus\Kid Ricarus\\Assets\FMOD\EFIRPROJECT\Build\Desktop\Master
-    Bank.bank
-  lastModified: 636898025312444572
+  Path: Assets\StreamingAssets\Master Bank.strings.bank
+  lastModified: 636898118208326093
   LoadResult: 0
   FileSizes:
-  - Name: Desktop
-    Value: 12474
-  Exists: 0
---- !u!114 &114353935186009952
+  - Name: 
+    Value: 714
+  Exists: 1
+--- !u!114 &114546267769503370
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -104,7 +75,7 @@ MonoBehaviour:
   Path: event:/BGM
   guid: 1701ac9c0e28884ba64b3ea3c983a8e3
   Banks:
-  - {fileID: 114222810507132196}
+  - {fileID: 114359192584282918}
   IsStream: 1
   Is3D: 0
   IsOneShot: 0
@@ -112,23 +83,3 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 100884
---- !u!114 &114571888495958746
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Path: Assets\StreamingAssets\Master Bank.strings.bank
-  lastModified: 636898116382515785
-  LoadResult: 0
-  FileSizes:
-  - Name: 
-    Value: 714
-  Exists: 1
->>>>>>> master
