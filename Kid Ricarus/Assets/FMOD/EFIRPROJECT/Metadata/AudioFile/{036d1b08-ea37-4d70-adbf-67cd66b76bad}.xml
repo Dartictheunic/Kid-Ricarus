@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.01.10.00">
+    <object class="AudioFile" id="{036d1b08-ea37-4d70-adbf-67cd66b76bad}">
+        <property name="assetPath">
+            <value>piano.ogg</value>
+        </property>
+        <property name="isStreaming">
+            <value>true</value>
+        </property>
+        <property name="frequencyInKHz">
+            <value>44.0999985</value>
+        </property>
+        <property name="channelCount">
+            <value>2</value>
+        </property>
+        <property name="length">
+            <value>17.596598639455781</value>
+        </property>
+        <relationship name="masterAssetFolder">
+            <destination>{28f2176c-b76e-4c36-b244-21492dec389b}</destination>
+        </relationship>
+    </object>
+</objects>

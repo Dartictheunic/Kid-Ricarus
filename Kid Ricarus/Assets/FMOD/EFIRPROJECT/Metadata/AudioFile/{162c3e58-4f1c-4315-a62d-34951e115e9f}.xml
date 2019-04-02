@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.01.10.00">
+    <object class="AudioFile" id="{162c3e58-4f1c-4315-a62d-34951e115e9f}">
+        <property name="assetPath">
+            <value>Pure_Arctic_Wind.mp3</value>
+        </property>
+        <property name="isStreaming">
+            <value>true</value>
+        </property>
+        <property name="frequencyInKHz">
+            <value>44.0999985</value>
+        </property>
+        <property name="channelCount">
+            <value>2</value>
+        </property>
+        <property name="length">
+            <value>100.88489795918368</value>
+        </property>
+        <relationship name="masterAssetFolder">
+            <destination>{28f2176c-b76e-4c36-b244-21492dec389b}</destination>
+        </relationship>
+    </object>
+</objects>
