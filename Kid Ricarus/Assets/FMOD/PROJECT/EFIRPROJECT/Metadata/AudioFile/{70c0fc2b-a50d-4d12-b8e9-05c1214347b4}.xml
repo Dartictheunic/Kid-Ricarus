@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.01.10.00">
+    <object class="AudioFile" id="{70c0fc2b-a50d-4d12-b8e9-05c1214347b4}">
+        <property name="assetPath">
+            <value>GTR.ogg</value>
+        </property>
+        <property name="isStreaming">
+            <value>true</value>
+        </property>
+        <property name="frequencyInKHz">
+            <value>44.0999985</value>
+        </property>
+        <property name="channelCount">
+            <value>2</value>
+        </property>
+        <property name="length">
+            <value>20.505691609977323</value>
+        </property>
+        <relationship name="masterAssetFolder">
+            <destination>{2679817d-b0aa-48cf-8c2b-692fd5c4ff07}</destination>
+        </relationship>
+    </object>
+</objects>

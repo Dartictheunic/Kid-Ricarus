@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.01.10.00">
+    <object class="AudioFile" id="{c6100db8-4a20-47e9-91ff-7219bab01d6d}">
+        <property name="assetPath">
+            <value>choir.ogg</value>
+        </property>
+        <property name="isStreaming">
+            <value>true</value>
+        </property>
+        <property name="frequencyInKHz">
+            <value>44.0999985</value>
+        </property>
+        <property name="channelCount">
+            <value>2</value>
+        </property>
+        <property name="length">
+            <value>17.465918367346937</value>
+        </property>
+        <relationship name="masterAssetFolder">
+            <destination>{2679817d-b0aa-48cf-8c2b-692fd5c4ff07}</destination>
+        </relationship>
+    </object>
+</objects>
