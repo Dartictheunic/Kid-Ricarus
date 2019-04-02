@@ -1550,6 +1550,7 @@ MonoBehaviour:
   actualPlayerState: 1
   mustMoveForward: 1
   energieAccumuleePique: 0
+  piqueMultiplicator: 0
   Acceleration: {fileID: 949627888}
   gyroAttitude: {fileID: 990664140}
   gyroRotationRate: {fileID: 1612070632}
@@ -1564,7 +1565,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 544973070}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -5}
+  m_LocalPosition: {x: 0, y: -1.68, z: -5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1782649046}
@@ -3911,7 +3912,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ccc1a125ae1f13e4f93bc5410ad9a3c5, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ccc1a125ae1f13e4f93bc5410ad9a3c5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
