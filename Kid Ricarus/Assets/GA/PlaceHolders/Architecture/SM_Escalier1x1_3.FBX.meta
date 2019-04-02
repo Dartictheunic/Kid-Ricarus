@@ -10,6 +10,7 @@ ModelImporter:
     3300000: //RootNode
     4300000: Escalier1x1_3
     4300002: Escalier1x1_1
+    4300004: SM_Escalier1x1_3
   externalObjects: {}
   materials:
     importMaterials: 1
