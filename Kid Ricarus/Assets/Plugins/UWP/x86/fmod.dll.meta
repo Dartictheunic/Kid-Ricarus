@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: 1a90de32abbef234bac99126f283a63d
+=======
+guid: 39f9a761a2a032045a853a069db31081
+>>>>>>> master
 PluginImporter:
   externalObjects: {}
   serializedVersion: 2
@@ -11,6 +15,7 @@ PluginImporter:
   isExplicitlyReferenced: 0
   platformData:
   - first:
+<<<<<<< HEAD
       '': Any
     second:
       enabled: 0
@@ -23,6 +28,25 @@ PluginImporter:
         Exclude OSXUniversal: 1
         Exclude Win: 1
         Exclude Win64: 1
+=======
+      '': OSXIntel
+    second:
+      enabled: 0
+      settings:
+        CPU: AnyCPU
+  - first:
+      '': OSXIntel64
+    second:
+      enabled: 0
+      settings:
+        CPU: AnyCPU
+  - first:
+      Android: Android
+    second:
+      enabled: 0
+      settings:
+        CPU: AnyCPU
+>>>>>>> master
   - first:
       Any: 
     second:
@@ -33,30 +57,49 @@ PluginImporter:
     second:
       enabled: 0
       settings:
+<<<<<<< HEAD
         DefaultValueInitialized: true
+=======
+        CPU: AnyCPU
+        DefaultValueInitialized: true
+        OS: AnyOS
+>>>>>>> master
   - first:
       Facebook: Win
     second:
       enabled: 0
       settings:
+<<<<<<< HEAD
         CPU: None
+=======
+        CPU: AnyCPU
+>>>>>>> master
   - first:
       Facebook: Win64
     second:
       enabled: 0
       settings:
+<<<<<<< HEAD
         CPU: None
+=======
+        CPU: AnyCPU
+>>>>>>> master
   - first:
       Standalone: Linux
     second:
       enabled: 0
       settings:
+<<<<<<< HEAD
         CPU: None
+=======
+        CPU: x86
+>>>>>>> master
   - first:
       Standalone: Linux64
     second:
       enabled: 0
       settings:
+<<<<<<< HEAD
         CPU: None
   - first:
       Standalone: LinuxUniversal
@@ -82,6 +125,31 @@ PluginImporter:
       enabled: 0
       settings:
         CPU: None
+=======
+        CPU: x86_64
+  - first:
+      Standalone: Win
+    second:
+      enabled: 0
+      settings:
+        CPU: AnyCPU
+  - first:
+      Standalone: Win64
+    second:
+      enabled: 0
+      settings:
+        CPU: AnyCPU
+  - first:
+      Windows Store Apps: WindowsStoreApps
+    second:
+      enabled: 1
+      settings:
+        CPU: X86
+        DontProcess: False
+        PlaceholderPath: 
+        SDK: UWP
+        ScriptingBackend: AnyScriptingBackend
+>>>>>>> master
   userData: 
   assetBundleName: 
   assetBundleVariant: 

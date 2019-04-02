@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: 90bff7efb528d4d4e91bb932016e2585
+=======
+guid: 1550e5c882b8c2445a1f14f8b1b23d41
+>>>>>>> master
 PluginImporter:
   externalObjects: {}
   serializedVersion: 2
@@ -11,17 +15,63 @@ PluginImporter:
   isExplicitlyReferenced: 0
   platformData:
   - first:
+<<<<<<< HEAD
       Any: 
     second:
       enabled: 1
+=======
+      '': OSXIntel
+    second:
+      enabled: 1
+      settings:
+        CPU: AnyCPU
+  - first:
+      '': OSXIntel64
+    second:
+      enabled: 1
+      settings:
+        CPU: None
+  - first:
+      '': SamsungTV
+    second:
+      enabled: 0
+      settings:
+        STV_MODEL: STANDARD_13
+  - first:
+      '': WP8
+    second:
+      enabled: 0
+      settings:
+        CPU: AnyCPU
+        DontProcess: False
+        PlaceholderPath: 
+  - first:
+      Android: Android
+    second:
+      enabled: 0
+      settings:
+        CPU: AnyCPU
+  - first:
+      Any: 
+    second:
+      enabled: 0
+>>>>>>> master
       settings: {}
   - first:
       Editor: Editor
     second:
+<<<<<<< HEAD
       enabled: 0
       settings:
         CPU: x86
         DefaultValueInitialized: true
+=======
+      enabled: 1
+      settings:
+        CPU: x86
+        DefaultValueInitialized: true
+        OS: Windows
+>>>>>>> master
   - first:
       Facebook: Win
     second:
@@ -43,14 +93,21 @@ PluginImporter:
   - first:
       Standalone: Linux64
     second:
+<<<<<<< HEAD
       enabled: 0
       settings:
         CPU: None
+=======
+      enabled: 1
+      settings:
+        CPU: AnyCPU
+>>>>>>> master
   - first:
       Standalone: LinuxUniversal
     second:
       enabled: 1
       settings:
+<<<<<<< HEAD
         CPU: x86
   - first:
       Standalone: OSXUniversal
@@ -58,6 +115,15 @@ PluginImporter:
       enabled: 0
       settings:
         CPU: x86
+=======
+        CPU: AnyCPU
+  - first:
+      Standalone: OSXUniversal
+    second:
+      enabled: 1
+      settings:
+        CPU: AnyCPU
+>>>>>>> master
   - first:
       Standalone: Win
     second:
@@ -70,6 +136,25 @@ PluginImporter:
       enabled: 0
       settings:
         CPU: None
+<<<<<<< HEAD
+=======
+  - first:
+      Windows Store Apps: WindowsStoreApps
+    second:
+      enabled: 0
+      settings:
+        CPU: AnyCPU
+        DontProcess: False
+        PlaceholderPath: 
+        SDK: AnySDK
+  - first:
+      iPhone: iOS
+    second:
+      enabled: 0
+      settings:
+        CompileFlags: 
+        FrameworkDependencies: 
+>>>>>>> master
   userData: 
   assetBundleName: 
   assetBundleVariant: 

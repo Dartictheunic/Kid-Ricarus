@@ -72,8 +72,9 @@ public class PlayerController : MonoBehaviour
     float lastYPosition;
     float timeBeforeResetRotation;
     float zAccelerationDelta;
-    Rigidbody playerBody;
     float timeSpentInPique;
+    float actualEssence;
+    Rigidbody playerBody;
 
     #endregion
 
@@ -94,6 +95,7 @@ public class PlayerController : MonoBehaviour
         playerBody = GetComponent<Rigidbody>();
         StartCoroutine(CheckSmartphoneAngle());
         ForcesDictionnaryScript.forcesDictionnaryScript.AddForce("Gravity", new Vector3(0, gravity, 0));
+        actualEssence = essenceDeSecours;
     }
 
     public void ChangePlayerGravity(float newGravityMultiplier)
@@ -143,7 +145,7 @@ public class PlayerController : MonoBehaviour
 
 #endif
 
-        rotationSpeedText.text = actualPlayerState.ToString();
+        gyroUserAcceleration.text = actualPlayerState.ToString();
     }
 
 
@@ -167,24 +169,132 @@ public class PlayerController : MonoBehaviour
         actualPlayerState = PlayerState.flying;
     }
 
+    public void Drop()
+    {
+        mustMoveForward = false;
+        ForcesDictionnaryScript.forcesDictionnaryScript.AddForce("Drop", transform.forward * forwardSpeed / 100);
+        transform.eulerAngles = new Vector3(Mathf.Lerp(myEulerAngles.x, maxXRotation, rotationSpeed), transform.eulerAngles.y, transform.eulerAngles.z);
+        timeSpentInPique += Time.deltaTime;
+        // AJOUTER UNE LIGNE POUR RAMENER LA CAMERA EN POSITION AU DESSUS DU JOUEUR
+        StartCoroutine(TemporaryReturnOfDrop(4f));
+    }
+
+    public void UpdatePlayer()
+    {
+        Vector3 phoneRotations = GetPhoneRotations();
+        gyroRotationRate.text = "phonerotations :" + phoneRotations;
+
+        if (actualPlayerState == PlayerState.flying)
+        {
+            if (phoneRotations.x < -15f)
+            {
+                if(actualEssence > 0f)
+                {
+                    actualEssence= Mathf.Min(actualEssence - Mathf.Abs(transform.position.y - lastYPosition), essenceDeSecours);
+                }
+
+                else
+                {
+                    Drop();
+                    return;
+                }
+            }
+
+            else
+            {
+                if(actualEssence < essenceDeSecours)
+                {
+                    actualEssence = Mathf.Min(actualEssence + Mathf.Abs(transform.position.y - lastYPosition), essenceDeSecours);
+                }
+            }
+
+#pragma warning disable CS0618 // Type or member is obsolete
+            transform.RotateAround(Vector3.up, phoneRotations.y * Time.deltaTime * rotationSpeed);
+#pragma warning restore CS0618 // Type or member is obsolete
+
+            transform.eulerAngles = new Vector3(Mathf.Lerp(myEulerAngles.x, phoneRotations.x, rotationSpeed), transform.eulerAngles.y, transform.eulerAngles.z);
+            cam.UpdateCamera(Mathf.InverseLerp(0, maxYRotation, Mathf.Abs(phoneRotations.y)) * Mathf.Sign(phoneRotations.y), Mathf.InverseLerp(0, maxXRotation, Mathf.Abs(phoneRotations.x)) * Mathf.Sign(phoneRotations.x));
+
+            if (phoneRotations.x > 40)
+            {
+                actualPlayerState = PlayerState.pique;
+            }
+
+        }
+
+        else if (actualPlayerState == PlayerState.pique)
+        {
+
+            if (phoneRotations.x < 40f)
+            {
+                phoneRotations.y = phoneRotations.y / 2;
+
+                if (timeSpentInPique > 1f)
+                {
+                    actualPlayerState = PlayerState.flying;
+                }
+
+                else
+                {
+                    energieAccumuleePique += (lastYPosition - transform.position.y) * piqueMultiplicator;
+                }
+            }
+
+            else
+            {
+                energieAccumuleePique += (lastYPosition - transform.position.y) * piqueMultiplicator;
+            }
+
+#pragma warning disable CS0618 // Type or member is obsolete
+            transform.RotateAround(Vector3.up, phoneRotations.y * Time.deltaTime * rotationSpeed);
+#pragma warning restore CS0618 // Type or member is obsolete
+
+            transform.eulerAngles = new Vector3(Mathf.Lerp(myEulerAngles.x, maxXRotation, rotationSpeed), transform.eulerAngles.y, transform.eulerAngles.z);
+            timeSpentInPique += Time.deltaTime;
+            cam.UpdateCamera(Mathf.InverseLerp(0, maxYRotation, Mathf.Abs(phoneRotations.y)) * Mathf.Sign(phoneRotations.y), Mathf.InverseLerp(0, maxXRotation, Mathf.Abs(phoneRotations.x)) * Mathf.Sign(phoneRotations.x));
+
+        }
+
+        else if (actualPlayerState == PlayerState.forceAscend)
+        {
+            cam.UpdateCamera(Mathf.InverseLerp(0, maxYRotation, Mathf.Abs(phoneRotations.y)) * Mathf.Sign(phoneRotations.y), Mathf.InverseLerp(0, maxXRotation, Mathf.Abs(phoneRotations.x)) * Mathf.Sign(phoneRotations.x));
+            return;
+        }
+
+        
+        lastYPosition = transform.position.y;
+        gyroRotationRateUnbiaised.text = "Essence :" + actualEssence;
+        gyroAttitude.text = "Energie accumulée :  " + energieAccumuleePique;
+    }
+
+    public void Move()
+    {
+        if (mustMoveForward)
+        {
+            playerBody.MovePosition(transform.position + forwardSpeed * transform.forward + ForcesDictionnaryScript.forcesDictionnaryScript.ReturnAllForces());
+        }
+
+        else
+        {
+            playerBody.MovePosition(transform.position + ForcesDictionnaryScript.forcesDictionnaryScript.ReturnAllForces());
+        }
+    }
+
+
     public Vector3 GetPhoneRotations()
     {
-        // Store la Old X rotation, faire le delta entre les 2 et si le mathf.abs du delta est supérieur à X et que la valeur de new X > .8 on braque
         truePhoneDelta = Input.acceleration - basePhoneAngle;
         xAccelerationDelta = -truePhoneDelta.x;
         zAccelerationDelta = (truePhoneDelta.y - truePhoneDelta.z) / 2;
-        gyroRotationRateUnbiaised.text = "XRotation :" + zAccelerationDelta;
 
         if (timeBeforeResetRotation > timeForBraquage)
         {
-            if (Mathf.Abs(lastXRotation - zAccelerationDelta) > .45f)
+            if (Mathf.Abs(lastXRotation - zAccelerationDelta) > .35f)
             {
                 rotationSpeedText.text = "BRAK";
                 if (actualPlayerState == PlayerState.flying)
                 {
-                    mustMoveForward = false;
-                    ForcesDictionnaryScript.forcesDictionnaryScript.AddForce("Drop", transform.forward * forwardSpeed / 100);
-                    StartCoroutine(TemporaryReturnOfDrop(4f));
+                    Drop();
                 }
 
                 else if (actualPlayerState == PlayerState.pique && zAccelerationDelta < .1f)
@@ -215,78 +325,11 @@ public class PlayerController : MonoBehaviour
         newXRotation = Mathf.InverseLerp(-maxInputTaken, maxInputTaken, zAccelerationDelta);
 
         newYRotation = Mathf.InverseLerp(-maxInputTaken, maxInputTaken, xAccelerationDelta);
-        gyroRotationRate.text = "New XRotation :" + newXRotation;
-        gyroAttitude.text = "newYRotation :  " + newYRotation;
+
 
         Vector3 calculatedVector = new Vector3(Mathf.Lerp(-maxXRotation, maxXRotation, newXRotation), Mathf.Lerp(-maxYRotation, maxYRotation, newYRotation), 0);
         calculatedVector.y *= -1;
         return calculatedVector;
-    }
-
-    public void UpdatePlayer()
-    {
-        Vector3 phoneRotations = GetPhoneRotations();
-
-        if (actualPlayerState == PlayerState.flying)
-        {
-
-#pragma warning disable CS0618 // Type or member is obsolete
-            transform.RotateAround(Vector3.up, phoneRotations.y * Time.deltaTime * rotationSpeed);
-#pragma warning restore CS0618 // Type or member is obsolete
-
-            transform.eulerAngles = new Vector3(Mathf.Lerp(myEulerAngles.x, phoneRotations.x, rotationSpeed), transform.eulerAngles.y, transform.eulerAngles.z);
-            cam.UpdateCamera(Mathf.InverseLerp(0, maxYRotation, Mathf.Abs(phoneRotations.y)) * Mathf.Sign(phoneRotations.y), Mathf.InverseLerp(0, maxXRotation, Mathf.Abs(phoneRotations.x)) * Mathf.Sign(phoneRotations.x));
-        }
-
-        else if (actualPlayerState == PlayerState.pique)
-        {
-
-            if (phoneRotations.y > .7f)
-            {
-                phoneRotations.x = phoneRotations.x / 2;
-            }
-
-            if (phoneRotations.y < .1f)
-            {
-                actualPlayerState = PlayerState.flying;
-            }
-
-            else
-            {
-                energieAccumuleePique += (lastYPosition - transform.position.y) * piqueMultiplicator;
-            }
-
-#pragma warning disable CS0618 // Type or member is obsolete
-            transform.RotateAround(Vector3.up, phoneRotations.y * Time.deltaTime * rotationSpeed);
-#pragma warning restore CS0618 // Type or member is obsolete
-
-            transform.eulerAngles = new Vector3(Mathf.Lerp(myEulerAngles.x, phoneRotations.x, rotationSpeed), transform.eulerAngles.y, transform.eulerAngles.z);
-            timeSpentInPique += Time.deltaTime;
-            cam.UpdateCamera(Mathf.InverseLerp(0, maxYRotation, Mathf.Abs(phoneRotations.y)) * Mathf.Sign(phoneRotations.y), Mathf.InverseLerp(0, maxXRotation, Mathf.Abs(phoneRotations.x)) * Mathf.Sign(phoneRotations.x));
-
-        }
-
-        else if (actualPlayerState == PlayerState.forceAscend)
-        {
-            cam.UpdateCamera(Mathf.InverseLerp(0, maxYRotation, Mathf.Abs(phoneRotations.y)) * Mathf.Sign(phoneRotations.y), Mathf.InverseLerp(0, maxXRotation, Mathf.Abs(phoneRotations.x)) * Mathf.Sign(phoneRotations.x));
-            return;
-        }
-
-        
-        lastYPosition = transform.position.y;
-    }
-
-    public void Move()
-    {
-        if (mustMoveForward)
-        {
-            playerBody.MovePosition(transform.position + forwardSpeed * transform.forward + ForcesDictionnaryScript.forcesDictionnaryScript.ReturnAllForces());
-        }
-
-        else
-        {
-            playerBody.MovePosition(transform.position + ForcesDictionnaryScript.forcesDictionnaryScript.ReturnAllForces());
-        }
     }
 
     #endregion
