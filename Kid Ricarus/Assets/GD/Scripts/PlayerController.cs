@@ -26,6 +26,9 @@ public class PlayerController : MonoBehaviour
     public float essenceDeSecours;
     [Tooltip("Fenetre pendant laquelle le brackage est checké")]
     public float timeForBraquage;
+    [Tooltip("Multiplicateur d'énergie du piqué")]
+    [Range(0f, 1f)]
+    public float piqueMultiplicator;
 
 
     [Header("Variables pour l'éditeur")]
@@ -39,6 +42,8 @@ public class PlayerController : MonoBehaviour
     [Space(30)]
     [Tooltip("La caméra dans la scène")]
     public CameraController cam;
+    [Tooltip("Le trigger en enfant du player (souvent une sphère)")]
+    public PlayerActivator trigger;
     #endregion
 
     #region variables Prog
@@ -49,9 +54,8 @@ public class PlayerController : MonoBehaviour
     public bool mustMoveForward = true;
     [Tooltip("Energie accumulée en piqué")]
     public float energieAccumuleePique;
-    [Tooltip("Multiplicateur d'énergie du piqué")]
-    [Range(0f, 1f)]
-    public float piqueMultiplicator;
+    [Tooltip("Le vecteur 3 appliqué au joueur à la frame précédente")]
+    public Vector3 playerLastMovement;
 
     #region debug text
     [Header("Debug ou temporaire")]
@@ -70,6 +74,9 @@ public class PlayerController : MonoBehaviour
     float xAccelerationDelta;
     float lastXRotation;
     float lastYPosition;
+    bool invertHorizontal;
+    bool invertVertical;
+    float yDelta;
     float timeBeforeResetRotation;
     float zAccelerationDelta;
     float timeSpentInPique;
@@ -119,6 +126,7 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        yDelta = lastYPosition - transform.position.y;
         Move();
 
 #if !UNITY_EDITOR
@@ -127,25 +135,11 @@ public class PlayerController : MonoBehaviour
 
 #if UNITY_EDITOR
         EditorControls();
-
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            ResetPlayer();
-        }
-
-        if (Input.GetKey(KeyCode.E))
-        {
-            forwardSpeed += Time.deltaTime;
-        }
-
-        if (Input.GetKey(KeyCode.A))
-        {
-            forwardSpeed -= Time.deltaTime;
-        }
-
 #endif
 
         gyroUserAcceleration.text = actualPlayerState.ToString();
+
+        lastYPosition = transform.position.y;
     }
 
 
@@ -153,13 +147,13 @@ public class PlayerController : MonoBehaviour
     #region Gestion Deplacement
     public IEnumerator TemporaryReturnOfDrop(float DropTime)
     {
-        energieAccumuleePique = 0f;
-        timeSpentInPique = 0f;
+        float oldSpeed = cam.camSpeed;
+        cam.camSpeed = 0f;
         yield return new WaitForSeconds(DropTime);
         mustMoveForward = true;
+        cam.camSpeed = oldSpeed;
         ForcesDictionnaryScript.forcesDictionnaryScript.RemoveForce("Drop");
         actualPlayerState = PlayerState.pique;
-        lastYPosition = transform.position.y;
     }
 
     public IEnumerator TemporaryEndAscend(float AscendTime)
@@ -171,12 +165,13 @@ public class PlayerController : MonoBehaviour
 
     public void Drop()
     {
+        actualPlayerState = PlayerState.drop;
         mustMoveForward = false;
         ForcesDictionnaryScript.forcesDictionnaryScript.AddForce("Drop", transform.forward * forwardSpeed / 100);
         transform.eulerAngles = new Vector3(Mathf.Lerp(myEulerAngles.x, maxXRotation, rotationSpeed), transform.eulerAngles.y, transform.eulerAngles.z);
         timeSpentInPique += Time.deltaTime;
         // AJOUTER UNE LIGNE POUR RAMENER LA CAMERA EN POSITION AU DESSUS DU JOUEUR
-        StartCoroutine(TemporaryReturnOfDrop(4f));
+        StartCoroutine(TemporaryReturnOfDrop(1.5f));
     }
 
     public void UpdatePlayer()
@@ -186,11 +181,17 @@ public class PlayerController : MonoBehaviour
 
         if (actualPlayerState == PlayerState.flying)
         {
-            if (phoneRotations.x < -15f)
+            if (phoneRotations.x < -5f)
             {
-                if(actualEssence > 0f)
+                if (energieAccumuleePique > 0f)
                 {
-                    actualEssence= Mathf.Min(actualEssence - Mathf.Abs(transform.position.y - lastYPosition), essenceDeSecours);
+                    energieAccumuleePique += yDelta;
+                }
+
+                else if(actualEssence > 0f)
+                {
+                    actualEssence += yDelta;
+                    Mathf.Clamp(actualEssence, -.2f, essenceDeSecours);
                 }
 
                 else
@@ -204,7 +205,7 @@ public class PlayerController : MonoBehaviour
             {
                 if(actualEssence < essenceDeSecours)
                 {
-                    actualEssence = Mathf.Min(actualEssence + Mathf.Abs(transform.position.y - lastYPosition), essenceDeSecours);
+                    Mathf.Clamp(actualEssence, -.2f, essenceDeSecours);
                 }
             }
 
@@ -215,7 +216,7 @@ public class PlayerController : MonoBehaviour
             transform.eulerAngles = new Vector3(Mathf.Lerp(myEulerAngles.x, phoneRotations.x, rotationSpeed), transform.eulerAngles.y, transform.eulerAngles.z);
             cam.UpdateCamera(Mathf.InverseLerp(0, maxYRotation, Mathf.Abs(phoneRotations.y)) * Mathf.Sign(phoneRotations.y), Mathf.InverseLerp(0, maxXRotation, Mathf.Abs(phoneRotations.x)) * Mathf.Sign(phoneRotations.x));
 
-            if (phoneRotations.x > 40)
+            if (phoneRotations.x > 15)
             {
                 actualPlayerState = PlayerState.pique;
             }
@@ -225,7 +226,7 @@ public class PlayerController : MonoBehaviour
         else if (actualPlayerState == PlayerState.pique)
         {
 
-            if (phoneRotations.x < 40f)
+            if (phoneRotations.x < 15f)
             {
                 phoneRotations.y = phoneRotations.y / 2;
 
@@ -236,13 +237,13 @@ public class PlayerController : MonoBehaviour
 
                 else
                 {
-                    energieAccumuleePique += (lastYPosition - transform.position.y) * piqueMultiplicator;
+                    energieAccumuleePique += yDelta * piqueMultiplicator;
                 }
             }
 
             else
             {
-                energieAccumuleePique += (lastYPosition - transform.position.y) * piqueMultiplicator;
+                energieAccumuleePique += yDelta * piqueMultiplicator;
             }
 
 #pragma warning disable CS0618 // Type or member is obsolete
@@ -257,25 +258,36 @@ public class PlayerController : MonoBehaviour
 
         else if (actualPlayerState == PlayerState.forceAscend)
         {
+            transform.eulerAngles = new Vector3(Mathf.Lerp(myEulerAngles.x, -maxXRotation, rotationSpeed), transform.eulerAngles.y, transform.eulerAngles.z);
+            // METTRE DU CODE POUR METTRE LA CAMERA SOUS LE JOUEUR                 
             cam.UpdateCamera(Mathf.InverseLerp(0, maxYRotation, Mathf.Abs(phoneRotations.y)) * Mathf.Sign(phoneRotations.y), Mathf.InverseLerp(0, maxXRotation, Mathf.Abs(phoneRotations.x)) * Mathf.Sign(phoneRotations.x));
+
             return;
         }
 
-        
-        lastYPosition = transform.position.y;
-        gyroRotationRateUnbiaised.text = "Essence :" + actualEssence;
-        gyroAttitude.text = "Energie accumulée :  " + energieAccumuleePique;
+        else if (actualPlayerState == PlayerState.drop)
+        {
+            transform.eulerAngles = new Vector3(Mathf.Lerp(myEulerAngles.x, maxXRotation, rotationSpeed), transform.eulerAngles.y, transform.eulerAngles.z);
+            // METTRE DU CODE POUR METTRE LA CAMERA AU DESSUS LE JOUEUR                 
+            cam.UpdateCamera(Mathf.InverseLerp(0, maxYRotation, Mathf.Abs(phoneRotations.y)) * Mathf.Sign(phoneRotations.y), Mathf.InverseLerp(0, maxXRotation, Mathf.Abs(phoneRotations.x)) * Mathf.Sign(phoneRotations.x));
+
+        }
+
+        gyroRotationRateUnbiaised.text = "Essence : " + actualEssence.ToString();
+        gyroAttitude.text = "Energie accumulée : " + energieAccumuleePique;
     }
 
     public void Move()
     {
         if (mustMoveForward)
         {
-            playerBody.MovePosition(transform.position + forwardSpeed * transform.forward + ForcesDictionnaryScript.forcesDictionnaryScript.ReturnAllForces());
+            playerLastMovement = forwardSpeed * transform.forward + ForcesDictionnaryScript.forcesDictionnaryScript.ReturnAllForces(); 
+            playerBody.MovePosition(transform.position + playerLastMovement);
         }
 
         else
         {
+            playerLastMovement = forwardSpeed * transform.forward + ForcesDictionnaryScript.forcesDictionnaryScript.ReturnAllForces();
             playerBody.MovePosition(transform.position + ForcesDictionnaryScript.forcesDictionnaryScript.ReturnAllForces());
         }
     }
@@ -328,7 +340,16 @@ public class PlayerController : MonoBehaviour
 
 
         Vector3 calculatedVector = new Vector3(Mathf.Lerp(-maxXRotation, maxXRotation, newXRotation), Mathf.Lerp(-maxYRotation, maxYRotation, newYRotation), 0);
-        calculatedVector.y *= -1;
+        
+        if(!invertHorizontal)
+        {
+            calculatedVector.y *= -1;
+        }
+
+        if(invertVertical)
+        {
+            calculatedVector.x *= -1;
+        }
         return calculatedVector;
     }
 
@@ -336,10 +357,20 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if (Input.touchCount > 0)
+        if (Input.touchCount > 0 && !trigger.activated && actualPlayerState == PlayerState.flying)
         {
-            ResetPlayer();
+            trigger.Activate();
+            mustMoveForward = false;
+            actualPlayerState = PlayerState.interacting;
         }
+
+        else if (Input.touchCount == 0 && trigger.activated)
+        {
+            trigger.DeActivate();
+            mustMoveForward = true;
+            actualPlayerState = PlayerState.flying;
+        }
+
         myEulerAngles = returnGoodEulers(transform.eulerAngles);
     }
 
@@ -379,6 +410,15 @@ public class PlayerController : MonoBehaviour
         cam.UpdateCamera(Mathf.InverseLerp(0, maxYRotation, Mathf.Abs(targetRotation.y)) * Mathf.Sign(targetRotation.y), Mathf.InverseLerp(0, maxXRotation, Mathf.Abs(targetRotation.x)) * Mathf.Sign(targetRotation.x));
     }
 
+    public void InvertHorizontal(bool doyou)
+    {
+        invertHorizontal = doyou;
+    }
+
+    public void InvertVertical(bool doyou)
+    {
+        invertVertical = doyou;
+    }
     #endregion
 
     public enum PlayerState
@@ -386,6 +426,7 @@ public class PlayerController : MonoBehaviour
         grounded,
         flying,
         interacting,
+        drop,
         pique,
         forceAscend
     }
