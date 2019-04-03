@@ -1,0 +1,176 @@
+fileFormatVersion: 2
+guid: 339ccac9b904e1c43a93fb7fe16d4179
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: Box001
+    100002: Dalle1x002
+    100004: Dalle1x003
+    100006: Mur1x003
+    100008: Mur1x004
+    100010: Mur1x005
+    100012: Mur1x006
+    100014: Pilier0,25x004
+    100016: Pilier0,25x005
+    100018: Pilier0,25x006
+    100020: Pilier0,25x007
+    100022: Pilier0,25x008
+    100024: Pilier0,25x009
+    100026: Pilier0,25x010
+    100028: Pilier0,25x011
+    100030: Porte2x2_004
+    100032: //RootNode
+    100034: ToitSphere001
+    400000: Box001
+    400002: Dalle1x002
+    400004: Dalle1x003
+    400006: Mur1x003
+    400008: Mur1x004
+    400010: Mur1x005
+    400012: Mur1x006
+    400014: Pilier0,25x004
+    400016: Pilier0,25x005
+    400018: Pilier0,25x006
+    400020: Pilier0,25x007
+    400022: Pilier0,25x008
+    400024: Pilier0,25x009
+    400026: Pilier0,25x010
+    400028: Pilier0,25x011
+    400030: Porte2x2_004
+    400032: //RootNode
+    400034: ToitSphere001
+    2100000: 'Material #2'
+    2300000: Dalle1x002
+    2300002: Dalle1x003
+    2300004: Mur1x003
+    2300006: Mur1x004
+    2300008: Mur1x005
+    2300010: Mur1x006
+    2300012: Pilier0,25x004
+    2300014: Pilier0,25x005
+    2300016: Pilier0,25x006
+    2300018: Pilier0,25x007
+    2300020: Pilier0,25x008
+    2300022: Pilier0,25x009
+    2300024: Pilier0,25x010
+    2300026: Pilier0,25x011
+    2300028: Porte2x2_004
+    2300030: ToitSphere001
+    3300000: Dalle1x002
+    3300002: Dalle1x003
+    3300004: Mur1x003
+    3300006: Mur1x004
+    3300008: Mur1x005
+    3300010: Mur1x006
+    3300012: Pilier0,25x004
+    3300014: Pilier0,25x005
+    3300016: Pilier0,25x006
+    3300018: Pilier0,25x007
+    3300020: Pilier0,25x008
+    3300022: Pilier0,25x009
+    3300024: Pilier0,25x010
+    3300026: Pilier0,25x011
+    3300028: Porte2x2_004
+    3300030: ToitSphere001
+    4300000: Porte2x2_004
+    4300002: Pilier0,25x004
+    4300004: Pilier0,25x005
+    4300006: Pilier0,25x006
+    4300008: Pilier0,25x007
+    4300010: Mur1x003
+    4300012: Dalle1x002
+    4300014: Pilier0,25x008
+    4300016: Pilier0,25x009
+    4300018: Pilier0,25x010
+    4300020: Pilier0,25x011
+    4300022: ToitSphere001
+    4300024: Mur1x004
+    4300026: Mur1x005
+    4300028: Dalle1x003
+    4300030: Mur1x006
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
