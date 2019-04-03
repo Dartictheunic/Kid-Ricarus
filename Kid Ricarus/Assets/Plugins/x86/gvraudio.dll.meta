@@ -11,23 +11,10 @@ PluginImporter:
   isExplicitlyReferenced: 0
   platformData:
   - first:
-      '': OSXIntel
+      Any: 
     second:
-      enabled: 0
-      settings:
-        CPU: AnyCPU
-  - first:
-      '': OSXIntel64
-    second:
-      enabled: 0
-      settings:
-        CPU: AnyCPU
-  - first:
-      Android: Android
-    second:
-      enabled: 0
-      settings:
-        CPU: AnyCPU
+      enabled: 1
+      settings: {}
   - first:
       Editor: Editor
     second:
@@ -35,7 +22,6 @@ PluginImporter:
       settings:
         CPU: x86
         DefaultValueInitialized: true
-        OS: AnyOS
   - first:
       Facebook: Win
     second:
@@ -51,7 +37,7 @@ PluginImporter:
   - first:
       Standalone: Linux
     second:
-      enabled: 0
+      enabled: 1
       settings:
         CPU: x86
   - first:
@@ -59,19 +45,19 @@ PluginImporter:
     second:
       enabled: 0
       settings:
-        CPU: x86_64
+        CPU: None
   - first:
       Standalone: LinuxUniversal
     second:
-      enabled: 0
+      enabled: 1
       settings:
-        CPU: AnyCPU
+        CPU: x86
   - first:
       Standalone: OSXUniversal
     second:
       enabled: 0
       settings:
-        CPU: AnyCPU
+        CPU: x86
   - first:
       Standalone: Win
     second:
