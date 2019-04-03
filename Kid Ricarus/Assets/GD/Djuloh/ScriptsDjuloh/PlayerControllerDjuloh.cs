@@ -291,6 +291,8 @@ public class PlayerControllerDjuloh : MonoBehaviour
             ResetPlayer();
         }
         myEulerAngles = returnGoodEulers(transform.eulerAngles);
+
+        
     }
 
     public Vector3 returnGoodEulers(Vector3 vectorToReturn)

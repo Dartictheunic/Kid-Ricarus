@@ -47,6 +47,7 @@ public class CameraDjuloh : MonoBehaviour
         Vector3 angles = transform.eulerAngles;
         baseRotation = transform.rotation;
         updateCamera = true;
+       
     }
 
     public void UpdateCamera(float xOffset, float yOffset)
@@ -55,60 +56,47 @@ public class CameraDjuloh : MonoBehaviour
         {
             camText.text = xOffset.ToString() + "x   " + yOffset.ToString() + "y   ";
             Vector3 actualPosition = transform.position;
+            actualPos = transform.position;
 
             if (xOffset >= 0)
             {
+                
                 Debug.Log("go gauche");
                 newX = Mathf.Lerp(actualPos.x, xTransformLeft.position.x, Mathf.Abs(xOffset));
-              
+         
                 currentCurve = StandardCurve;
-                if (gameObject.transform.position.x <= xTransformLeft.position.x - 0.5 || gameObject.transform.position.x >= xTransformLeft.position.z + 0.5)
-                {
-
-                    updatePos = true;
-                }
+              //  updatePos = false;
+            
             }
 
             else
             {
                 Debug.Log("go droite");
                 newX = Mathf.Lerp(actualPos.x, xTransformRight.position.x, Mathf.Abs(xOffset));
-             
+           
                 currentCurve = StandardCurve;
-                if (gameObject.transform.position.x <= xTransformRight.position.x - 0.5 || gameObject.transform.position.x >= xTransformRight.position.z + 0.5)
-                {
-
-                    updatePos = true;
-                }
+                // updatePos = false;
             }
 
             if (yOffset >= 0)
             {
                 Debug.Log("en haut");
                 newY = Mathf.Lerp(actualPos.y, yTransformUp.position.y, Mathf.Abs(yOffset));
-                newZ = idleTransform.position.z;
+          
                 currentCurve = StandardCurve;
-                if (gameObject.transform.position.y <= yTransformUp.position.y - 0.5 || gameObject.transform.position.y >= yTransformUp.position.z + 0.5)
-                {
-
-                    updatePos = true;
-                }
+                // updatePos = false;
             }
 
             else
             {
                 Debug.Log("en bas");
                 newY = Mathf.Lerp(actualPos.y, yTransformDown.position.y, Mathf.Abs(yOffset));
-                newZ = idleTransform.position.z;
+              
                 currentCurve = StandardCurve;
-                if (gameObject.transform.position.y <= yTransformDown.position.y - 0.5 || gameObject.transform.position.y >= yTransformDown.position.z + 0.5)
-                {
-
-                    updatePos = true;
-                }
+                //  updatePos = false;
             }
 
-            if (player.actualPlayerState == PlayerControllerDjuloh.PlayerState.pique)
+      /*      if (player.actualPlayerState == PlayerControllerDjuloh.PlayerState.pique)
             {
                
                 Debug.Log("piqué");
@@ -116,21 +104,18 @@ public class CameraDjuloh : MonoBehaviour
                 newY = Mathf.LerpUnclamped(yTransformUp.position.y, topTransform.position.y, yOffset);
                 newZ = Mathf.LerpUnclamped(yTransformUp.position.z, topTransform.position.z, yOffset);
                 currentCurve = TopCurve;
+                //  updatePos = false;
 
-                if(gameObject.transform.position.z <= topTransform.position.z - 1 || gameObject.transform.position.z >= topTransform.position.z + 1)
-                {
-
-                    updatePos = true;
-                }
             }
-
+            */
+            newZ = origin.position.z;
 
             animTimePos += Time.deltaTime *0.1f;
             
             Vector3 toPosition = new Vector3(newX, newY, newZ);
-            transform.position = toPosition;
+           
             //Debug.Log("From position : " + transform.position +  "To Position + " + toPosition + "Delta :" + Time.deltaTime * camSpeed);
-            //transform.position = Vector3.Lerp(transform.position, toPosition, currentCurve.Evaluate(animTimePos)* Vector3.Distance(transform.position, toPosition));
+            transform.position = Vector3.Lerp(transform.position, toPosition, Time.deltaTime* camSpeed * Vector3.Distance(transform.position, toPosition));
             Debug.Log(currentCurve.Evaluate(animTimePos));
             transform.LookAt(target);
         }
