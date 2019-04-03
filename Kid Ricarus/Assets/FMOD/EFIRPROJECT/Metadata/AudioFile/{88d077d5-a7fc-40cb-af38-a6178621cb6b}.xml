@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.01.10.00">
+    <object class="AudioFile" id="{88d077d5-a7fc-40cb-af38-a6178621cb6b}">
+        <property name="assetPath">
+            <value>pad BG.ogg</value>
+        </property>
+        <property name="isStreaming">
+            <value>true</value>
+        </property>
+        <property name="frequencyInKHz">
+            <value>44.0999985</value>
+        </property>
+        <property name="channelCount">
+            <value>2</value>
+        </property>
+        <property name="length">
+            <value>209.46591836734694</value>
+        </property>
+        <relationship name="masterAssetFolder">
+            <destination>{28f2176c-b76e-4c36-b244-21492dec389b}</destination>
+        </relationship>
+    </object>
+</objects>
