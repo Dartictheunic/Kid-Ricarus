@@ -5276,123 +5276,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   camText: {fileID: 1407167534}
   target: {fileID: 1842843360}
-  origin: {fileID: 257561312}
-  xTransformLeft: {fileID: 1813488731}
-  xTransformRight: {fileID: 412882732}
+  origin: {fileID: 1334379389}
+  xTransformLeft: {fileID: 412882732}
+  xTransformRight: {fileID: 1813488731}
   yTransformUp: {fileID: 1580335239}
   yTransformDown: {fileID: 1832161049}
   idleTransform: {fileID: 1334379389}
+  topTransform: {fileID: 1580335239}
+  bottomTransform: {fileID: 1832161049}
+  farLeftTransform: {fileID: 1813488731}
+  farRightTransform: {fileID: 412882732}
   idlePos: {x: 0, y: 2.3, z: -15}
+  actualPos: {x: 0, y: 0, z: 0}
+  player: {fileID: 1903048684}
   camSpeed: 5
-  UpCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 5.6221237
-      outSlope: 5.6221237
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.116950646
-      value: 0.657511
-      inSlope: 2.7365406
-      outSlope: 2.7365406
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.1812878
-    - serializedVersion: 3
-      time: 0.29283983
-      value: 0.8960362
-      inSlope: 0.47648808
-      outSlope: 0.47648808
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.07260903
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0.029986253
-      outSlope: 0.029986253
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.12092629
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  DownCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 5.6221237
-      outSlope: 5.6221237
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.116950646
-      value: 0.657511
-      inSlope: 2.7365406
-      outSlope: 2.7365406
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.1812878
-    - serializedVersion: 3
-      time: 0.29283983
-      value: 0.8960362
-      inSlope: 0.47648808
-      outSlope: 0.47648808
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.07260903
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0.029986253
-      outSlope: 0.029986253
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.12092629
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  LeftCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 2.6993022
-      outSlope: 2.6993022
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.031823743
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0.056224205
-      outSlope: 0.056224205
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.12499985
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  RightCurve:
+  StandardCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
@@ -5422,47 +5320,38 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 2.832884
-      outSlope: 2.832884
+      inSlope: 5.6221237
+      outSlope: 5.6221237
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.2863648
-      value: 0.8112383
-      inSlope: 1.3935497
-      outSlope: 1.3935497
+      time: 0.116950646
+      value: 0.657511
+      inSlope: 2.7365406
+      outSlope: 2.7365406
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
-      outWeight: 0.5500348
+      outWeight: 0.1812878
     - serializedVersion: 3
-      time: 0.4326123
-      value: 0.89159083
-      inSlope: 0.28966996
-      outSlope: 0.28966996
+      time: 0.29283983
+      value: 0.8960362
+      inSlope: 0.47648808
+      outSlope: 0.47648808
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.74427265
-      value: 0.9789788
-      inSlope: 0.0823662
-      outSlope: 0.0823662
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.27805087
-      outWeight: 0.19390418
+      outWeight: 0.07260903
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 0.08220156
-      outSlope: 0.08220156
-      tangentMode: 34
+      inSlope: 0.029986253
+      outSlope: 0.029986253
+      tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
+      inWeight: 0.12092629
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -5706,17 +5595,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CamDjuloh: {fileID: 1880791238}
-  forwardSpeed: 0.07
+  forwardSpeed: 0.05
   maxForwardSpeed: 1
   gravity: -0.01
   rotationSpeed: 1
   maxXRotation: 60
   maxYRotation: 90
   maxInputTaken: 0.25
-  mouseScale: 40
+  essenceDeSecours: 5
+  timeForBraquage: 0.01
+  mouseScale: 20
   cam: {fileID: 1880791236}
   actualPlayerState: 1
   mustMoveForward: 1
+  energieAccumuleePique: 0
+  piqueMultiplicator: 0
   Acceleration: {fileID: 949627888}
   gyroAttitude: {fileID: 990664140}
   gyroRotationRate: {fileID: 1612070632}
