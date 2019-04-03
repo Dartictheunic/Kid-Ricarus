@@ -12,17 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d32cf7c32a3ed8347bac48ef5ed56d82, type: 3}
   m_Name: FMODStudioCache
   m_EditorClassIdentifier: 
-<<<<<<< HEAD
   EditorBanks:
-  - {fileID: 114571888495958746}
-  - {fileID: 114231952325714432}
+  - {fileID: 114127594665858494}
+  - {fileID: 114002695554828762}
   EditorEvents:
-  - {fileID: 114995564305591478}
-  MasterBankRef: {fileID: 114231952325714432}
-  StringsBankRef: {fileID: 114571888495958746}
-  stringsBankWriteTime: 636898839053820912
+  - {fileID: 114255354627016658}
+  MasterBankRef: {fileID: 114002695554828762}
+  StringsBankRef: {fileID: 114127594665858494}
+  stringsBankWriteTime: 636898813784770537
   cacheVersion: 2
---- !u!114 &114231952325714432
+--- !u!114 &114002695554828762
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -34,15 +33,58 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Path: C:\Users\c.castric\Documents\KID RICARUS\Kid-Ricarus\Kid Ricarus\Assets\FMOD\EFIRPROJECT\Build\Desktop\Master
+  Path: C:\Users\j.tien\Documents\Kid-Ricarus\Kid Ricarus\Assets\StreamingAssets\Master
     Bank.bank
-  lastModified: 636898839053780955
+  lastModified: 636898842711399589
   LoadResult: 0
   FileSizes:
-  - Name: Desktop
+  - Name: 
     Value: 5934432
   Exists: 1
---- !u!114 &114358477703594500
+--- !u!114 &114127594665858494
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: Assets\StreamingAssets\Master Bank.strings.bank
+  lastModified: 636898813784770537
+  LoadResult: 0
+  FileSizes:
+  - Name: 
+    Value: 714
+  Exists: 1
+--- !u!114 &114255354627016658
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: event:/BGM
+  guid: 1701ac9c0e28884ba64b3ea3c983a8e3
+  Banks:
+  - {fileID: 114002695554828762}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters:
+  - {fileID: 114784656594210118}
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 209465
+--- !u!114 &114784656594210118
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -58,54 +100,3 @@ MonoBehaviour:
   Min: 0
   Max: 1
   Default: 0
---- !u!114 &114571888495958746
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Path: Assets\FMOD\EFIRPROJECT\Build\Desktop\Master Bank.strings.bank
-  lastModified: 636898839053820912
-  LoadResult: 0
-  FileSizes:
-  - Name: Desktop
-    Value: 714
-  Exists: 1
---- !u!114 &114995564305591478
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Path: event:/BGM
-  guid: 1701ac9c0e28884ba64b3ea3c983a8e3
-  Banks:
-  - {fileID: 114231952325714432}
-  IsStream: 1
-  Is3D: 0
-  IsOneShot: 0
-  Parameters:
-  - {fileID: 114358477703594500}
-  MinDistance: 0
-  MaxDistance: 0
-  Length: 209465
-=======
-  EditorBanks: []
-  EditorEvents: []
-  MasterBankRef: {fileID: 0}
-  StringsBankRef: {fileID: 0}
-  stringsBankWriteTime: 0
-  cacheVersion: 2
->>>>>>> master

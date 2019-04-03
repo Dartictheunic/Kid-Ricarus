@@ -5276,9 +5276,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   camText: {fileID: 1407167534}
   target: {fileID: 1842843360}
-  origin: {fileID: 257561312}
-  xTransformLeft: {fileID: 1941270132}
-  xTransformRight: {fileID: 2101799261}
+  origin: {fileID: 1334379389}
+  xTransformLeft: {fileID: 1813488731}
+  xTransformRight: {fileID: 412882732}
   yTransformUp: {fileID: 1529739900}
   yTransformDown: {fileID: 1575700094}
   idleTransform: {fileID: 1334379389}
