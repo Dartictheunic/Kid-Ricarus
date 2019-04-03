@@ -2530,6 +2530,80 @@ Transform:
   m_Father: {fileID: 802898996}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1068273398
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 7026014282330972700, guid: 7826c7d4b7496284abd05efa73443cd7,
+        type: 3}
+      propertyPath: m_Name
+      value: Module_CourantAerien
+      objectReference: {fileID: 0}
+    - target: {fileID: 3451606794383703949, guid: 7826c7d4b7496284abd05efa73443cd7,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -10.215504
+      objectReference: {fileID: 0}
+    - target: {fileID: 3451606794383703949, guid: 7826c7d4b7496284abd05efa73443cd7,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -57.44129
+      objectReference: {fileID: 0}
+    - target: {fileID: 3451606794383703949, guid: 7826c7d4b7496284abd05efa73443cd7,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -14.943443
+      objectReference: {fileID: 0}
+    - target: {fileID: 3451606794383703949, guid: 7826c7d4b7496284abd05efa73443cd7,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3451606794383703949, guid: 7826c7d4b7496284abd05efa73443cd7,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3451606794383703949, guid: 7826c7d4b7496284abd05efa73443cd7,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.26527888
+      objectReference: {fileID: 0}
+    - target: {fileID: 3451606794383703949, guid: 7826c7d4b7496284abd05efa73443cd7,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.96417177
+      objectReference: {fileID: 0}
+    - target: {fileID: 3451606794383703949, guid: 7826c7d4b7496284abd05efa73443cd7,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 3451606794383703949, guid: 7826c7d4b7496284abd05efa73443cd7,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3451606794383703949, guid: 7826c7d4b7496284abd05efa73443cd7,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3451606794383703949, guid: 7826c7d4b7496284abd05efa73443cd7,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 30.767002
+      objectReference: {fileID: 0}
+    - target: {fileID: 9005037158340467780, guid: 7826c7d4b7496284abd05efa73443cd7,
+        type: 3}
+      propertyPath: type
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 7826c7d4b7496284abd05efa73443cd7, type: 3}
 --- !u!1 &1085119239
 GameObject:
   m_ObjectHideFlags: 0
@@ -5282,137 +5356,17 @@ MonoBehaviour:
   yTransformUp: {fileID: 1580335239}
   yTransformDown: {fileID: 1832161049}
   idleTransform: {fileID: 1334379389}
+  topTransform: {fileID: 0}
+  bottomTransform: {fileID: 0}
+  farLeftTransform: {fileID: 0}
+  farRightTransform: {fileID: 0}
   idlePos: {x: 0, y: 2.3, z: -15}
+  actualPos: {x: 0, y: 0, z: 0}
+  player: {fileID: 0}
   camSpeed: 5
-  UpCurve:
+  StandardCurve:
     serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 5.6221237
-      outSlope: 5.6221237
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.116950646
-      value: 0.657511
-      inSlope: 2.7365406
-      outSlope: 2.7365406
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.1812878
-    - serializedVersion: 3
-      time: 0.29283983
-      value: 0.8960362
-      inSlope: 0.47648808
-      outSlope: 0.47648808
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.07260903
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0.029986253
-      outSlope: 0.029986253
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.12092629
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  DownCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 5.6221237
-      outSlope: 5.6221237
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.116950646
-      value: 0.657511
-      inSlope: 2.7365406
-      outSlope: 2.7365406
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.1812878
-    - serializedVersion: 3
-      time: 0.29283983
-      value: 0.8960362
-      inSlope: 0.47648808
-      outSlope: 0.47648808
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.07260903
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0.029986253
-      outSlope: 0.029986253
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.12092629
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  LeftCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 2.6993022
-      outSlope: 2.6993022
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.031823743
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0.056224205
-      outSlope: 0.056224205
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.12499985
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  RightCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 2.6993022
-      outSlope: 2.6993022
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.031823743
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0.056224205
-      outSlope: 0.056224205
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.12499985
-      outWeight: 0.33333334
+    m_Curve: []
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
@@ -5713,10 +5667,14 @@ MonoBehaviour:
   maxXRotation: 60
   maxYRotation: 90
   maxInputTaken: 0.25
+  essenceDeSecours: 0
+  timeForBraquage: 0
   mouseScale: 40
   cam: {fileID: 1880791236}
   actualPlayerState: 1
   mustMoveForward: 1
+  energieAccumuleePique: 0
+  piqueMultiplicator: 0
   Acceleration: {fileID: 949627888}
   gyroAttitude: {fileID: 990664140}
   gyroRotationRate: {fileID: 1612070632}
