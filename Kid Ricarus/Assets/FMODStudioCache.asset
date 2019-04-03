@@ -14,13 +14,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EditorBanks:
   - {fileID: 114384682783066822}
-  - {fileID: 114359192584282918}
+  - {fileID: 114333842954323924}
   EditorEvents:
   - {fileID: 114546267769503370}
-  MasterBankRef: {fileID: 114359192584282918}
+  MasterBankRef: {fileID: 114333842954323924}
   StringsBankRef: {fileID: 114384682783066822}
-  stringsBankWriteTime: 636898118208326093
+  stringsBankWriteTime: 636898807852282774
   cacheVersion: 2
+--- !u!114 &114333842954323924
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: C:\Users\c.ebran\Documents\COURS-PROJETS\Projet Jeu Mobile 2\Kid-Ricarus\Kid
+    Ricarus\Assets\StreamingAssets\Master Bank.bank
+  lastModified: 636898807852092838
+  LoadResult: 0
+  FileSizes:
+  - Name: 
+    Value: 3631520
+  Exists: 1
 --- !u!114 &114359192584282918
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -54,7 +74,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Path: Assets\StreamingAssets\Master Bank.strings.bank
-  lastModified: 636898118208326093
+  lastModified: 636898807852282774
   LoadResult: 0
   FileSizes:
   - Name: 
@@ -75,7 +95,7 @@ MonoBehaviour:
   Path: event:/BGM
   guid: 1701ac9c0e28884ba64b3ea3c983a8e3
   Banks:
-  - {fileID: 114359192584282918}
+  - {fileID: 114333842954323924}
   IsStream: 1
   Is3D: 0
   IsOneShot: 0
