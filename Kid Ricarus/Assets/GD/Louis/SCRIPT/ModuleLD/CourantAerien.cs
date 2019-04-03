@@ -7,8 +7,16 @@ public class CourantAerien : MonoBehaviour
     public GameObject entree, sortie;
     public float speedBoost; 
     private Vector3 direction;
+    public ParticleSystem fx; 
+
+    public TypeDeCourant type = TypeDeCourant.ascendant;
+    private int typeModif = 1;
+
+    public Color cAscendant;
+    public Color cDescandant;
 
 
+   
     private void Start()
     {
         direction = (sortie.transform.position - entree.transform.position).normalized;
@@ -22,12 +30,7 @@ public class CourantAerien : MonoBehaviour
     {
         if (other.GetComponent<PlayerControllerDjuloh>() != null)
         {
-            ForcesDictionnaryScript.forcesDictionnaryScript.AddForce ("Courant" + transform.parent.name , direction * speedBoost); 
-            print("ok");
-        }
-        else
-        {
-            print("nope");
+            ForcesDictionnaryScript.forcesDictionnaryScript.AddForce ("Courant" + transform.parent.name , direction * speedBoost*typeModif); 
         }
     }
 
@@ -37,6 +40,49 @@ public class CourantAerien : MonoBehaviour
         {
             ForcesDictionnaryScript.forcesDictionnaryScript.RemoveForce("Courant" + transform.parent.name);
         }
+    }
+
+    [SerializeField]
+    public enum TypeDeCourant
+    {
+        ascendant , 
+        descendant
+    }
+
+    private void OnGUI()
+    {
+        if ((int)type == 1)
+            Debug.Log("c'est descendant");
+
+        switch (type)
+        {
+            case TypeDeCourant.ascendant:
+                {
+                    typeModif = 1;
+                    print(typeModif);
+                    fx.transform.position = entree.transform.position;
+                    ParticleSystem.VelocityOverLifetimeModule psVel = fx.velocityOverLifetime;
+                    psVel.speedModifier = 1;
+                    ParticleSystem.MainModule psMain = fx.main;
+                    psMain.startColor = cAscendant;
+
+                }
+                break;
+
+            case TypeDeCourant.descendant:
+                {
+                    typeModif = -1;
+                    print(typeModif);
+                    fx.transform.position = sortie.transform.position;
+                    ParticleSystem.VelocityOverLifetimeModule psVel = fx.velocityOverLifetime;
+                    psVel.speedModifier = -1;
+                    ParticleSystem.MainModule psMain = fx.main;
+                    psMain.startColor = cDescandant;
+                }
+                break;
+
+        }
+
     }
 
 }

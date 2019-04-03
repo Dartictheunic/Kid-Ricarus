@@ -11,6 +11,7 @@ public class Portail : MonoBehaviour
     public GameObject[] cristauxSlot;
     public GameObject interieurPortail;
     public ParticleSystem[] FXs; 
+    private Mesh mesh;
 
 
     private void Awake()
@@ -44,5 +45,13 @@ public class Portail : MonoBehaviour
             }
         }
     }
+
+    //void OnDrawGizmos(Color color)
+    //{
+    //    mesh = GetComponent<MeshFilter>().sharedMesh;
+
+    //    Gizmos.color = color;
+    //    Gizmos.DrawMesh(mesh, transform.position, transform.localRotation, transform.localScale);
+    //}
 
 }
