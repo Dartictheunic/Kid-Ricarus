@@ -2,7 +2,6 @@ Kid Ricarus/Library/
 Kid Ricarus/.vs/
 [Tt]emp/
 [Oo]bj/
-[Bb]uild/
 [Bb]uilds/
 [Ll]ogs/
 
@@ -21,8 +20,8 @@ Kid Ricarus/.vs/
 ExportedObj/
 .consulo/
 *.csproj
-*.dll
 *.unityproj
+*.ide-shm
 *.sln
 *.suo
 *.tmp
@@ -57,3 +56,5 @@ crashlytics-build.properties
 Kid Ricarus/obj/Debug/
 
 Kid Ricarus/obj/
+
+Kid Ricarus/fmod_editor\.log

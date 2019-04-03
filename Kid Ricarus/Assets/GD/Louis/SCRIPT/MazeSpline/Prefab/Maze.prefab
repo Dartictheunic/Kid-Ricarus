@@ -43,10 +43,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eabf40da6a045f9459f7ac82f2077270, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  passagePrefab: {fileID: 4128416027854613103, guid: 18c98e1ee63242b42975f4f785e4ebe9,
+    type: 3}
+  wallPrefab: {fileID: 5257508141307632622, guid: e114728adff28384e893be3e790fea08,
+    type: 3}
   size:
     x: 20
     z: 20
   cellPrefab: {fileID: 1476485285496853360, guid: 54b4c6e22ff3a9440bf27114476b5162,
     type: 3}
-  generationStepDelay: 0.05
-  activeCells: []
+  generationStepDelay: 0.001
