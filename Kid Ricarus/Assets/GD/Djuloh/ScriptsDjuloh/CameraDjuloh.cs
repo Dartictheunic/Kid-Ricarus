@@ -63,18 +63,18 @@ public class CameraDjuloh : MonoBehaviour
                 
                 Debug.Log("go gauche");
                 newX = Mathf.Lerp(actualPos.x, xTransformLeft.position.x, Mathf.Abs(xOffset));
-         
-                currentCurve = StandardCurve;
-              //  updatePos = false;
-            
+
+                SetCameraCurve(StandardCurve,0);
+                //  updatePos = false;
+
             }
 
-            else
+            else if (xOffset <= 0)
             {
                 Debug.Log("go droite");
                 newX = Mathf.Lerp(actualPos.x, xTransformRight.position.x, Mathf.Abs(xOffset));
-           
-                currentCurve = StandardCurve;
+
+                SetCameraCurve(StandardCurve,0);
                 // updatePos = false;
             }
 
@@ -82,8 +82,8 @@ public class CameraDjuloh : MonoBehaviour
             {
                 Debug.Log("en haut");
                 newY = Mathf.Lerp(actualPos.y, yTransformUp.position.y, Mathf.Abs(yOffset));
-          
-                currentCurve = StandardCurve;
+
+                SetCameraCurve(StandardCurve,0);
                 // updatePos = false;
             }
 
@@ -91,8 +91,8 @@ public class CameraDjuloh : MonoBehaviour
             {
                 Debug.Log("en bas");
                 newY = Mathf.Lerp(actualPos.y, yTransformDown.position.y, Mathf.Abs(yOffset));
-              
-                currentCurve = StandardCurve;
+
+                SetCameraCurve(StandardCurve,0);
                 //  updatePos = false;
             }
 
@@ -115,10 +115,18 @@ public class CameraDjuloh : MonoBehaviour
             Vector3 toPosition = new Vector3(newX, newY, newZ);
            
             //Debug.Log("From position : " + transform.position +  "To Position + " + toPosition + "Delta :" + Time.deltaTime * camSpeed);
-            transform.position = Vector3.Lerp(transform.position, toPosition, Time.deltaTime* camSpeed * Vector3.Distance(transform.position, toPosition));
+            transform.position = Vector3.Lerp(transform.position, toPosition, currentCurve.Evaluate(animTimePos)* camSpeed * Vector3.Distance(transform.position, toPosition));
             Debug.Log(currentCurve.Evaluate(animTimePos));
             transform.LookAt(target);
         }
+    }
+
+    public void SetCameraCurve(AnimationCurve curve, float timeCurve)
+    {
+        animTimePos = timeCurve;
+        currentCurve = curve;
+       
+
     }
 
     public void SetCamPos(){

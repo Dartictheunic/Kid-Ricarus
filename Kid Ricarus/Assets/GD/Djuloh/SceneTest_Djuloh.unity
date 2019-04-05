@@ -1143,7 +1143,7 @@ GameObject:
   - component: {fileID: 412882734}
   - component: {fileID: 412882733}
   m_Layer: 0
-  m_Name: VirageGauche Transform
+  m_Name: VirageDroite Transform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4751,7 +4751,7 @@ GameObject:
   - component: {fileID: 1813488733}
   - component: {fileID: 1813488732}
   m_Layer: 0
-  m_Name: VirageDroite Transform
+  m_Name: VirageGauche Transform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
